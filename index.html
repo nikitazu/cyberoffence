@@ -1,0 +1,150 @@
+﻿<html>
+<head>
+    <script src="scripts/lib/three.js-r84/build/three.min.js"></script>
+	<style>
+		/* We want our scene to span the entire window */
+		body { margin: 0; }
+	</style>
+</heda>
+<body>
+  <script id="shader_01_multicolor" type="shader-code">
+  uniform vec2 resolution;
+  void main() {
+    vec2 uv = gl_FragCoord.xy / resolution.xy; 
+    gl_FragColor = vec4(uv, 0.5, 1.0);
+  }
+  </script>
+
+
+  <script id="shader_02_four_squares" type="shader-code">
+  uniform vec2 resolution;
+  void main() {
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+
+    if (uv.x < 0.5 && uv.y < 0.5) {
+      gl_FragColor = vec4(uv, 0.5, 1.0);       // top right
+    } else if (uv.x < 0.5) {
+      gl_FragColor = vec4(1.0, 0.5, 0.5, 1.0); // bottom left
+    } else if (uv.y < 0.5) {
+      gl_FragColor = vec4(0.5, 1.0, 0.5, 1.0); // top left
+    } else {
+      gl_FragColor = vec4(0.5, 0.5, 1.0, 1.0); // bottom right
+    }
+  }
+  </script>
+
+
+  <script id="shader_03_time_change_color" type="shader-code">
+  uniform vec2  resolution;
+  uniform float ticks;
+  void main() {
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+    float k = abs(sin(ticks * 0.005));
+    gl_FragColor = vec4(uv * k * 0.5, 0.5, 1.0);
+  }
+  </script>
+  
+  
+  <script id="shader_04_texture" type="shader-code">
+  uniform vec2      resolution;
+  uniform sampler2D texture;
+  void main() {
+    vec2 uv = gl_FragCoord.xy / resolution.xy; 
+    gl_FragColor = texture2D(texture, uv);
+  }
+  </script>
+  
+  
+  <script id="shader_05_texture_preserve_aspect_ratio" type="shader-code">
+  uniform vec2      resolution;
+  uniform sampler2D texture;
+  void main() {
+    float maxSide = resolution.x > resolution.y ? resolution.x : resolution.y;
+    vec2  uv = gl_FragCoord.xy / maxSide; // texture should be square
+    gl_FragColor = texture2D(texture, uv);
+  }
+  </script>
+  
+  
+  <script id="shader_06_lighting_real" type="shader-code">
+  uniform vec2      resolution;
+  uniform sampler2D texture;
+  uniform vec3      light;
+  uniform float     ticks;
+  void main() {
+    float slowTicks   = ticks * 0.001;
+    float fluctuation = 0.5 + 0.2 * abs(sin(slowTicks)); // 0.5 .. 0.7
+    
+    float maxSide = resolution.x > resolution.y ? resolution.x : resolution.y;
+    vec2  uv      = gl_FragCoord.xy / maxSide;
+    vec2  lightuv = vec2(light.x, resolution.y - light.y) / maxSide;
+    float dist    = distance(uv, lightuv);
+    float kl      = (1.0 - dist / light.z * fluctuation);
+    gl_FragColor  = texture2D(texture, uv) * kl;
+  }
+  </script>
+  
+  
+  <script id="shader_07_lighting_fun" type="shader-code">
+  uniform vec2      resolution;
+  uniform sampler2D texture;
+  uniform vec3      light;
+  uniform float     ticks;
+  void main() {
+    float slowTicks   = ticks * 0.001;
+    float fluctuation = 0.5 + 0.2 * abs(sin(slowTicks)); // 0.5 .. 0.7
+    
+    float maxSide = resolution.x > resolution.y ? resolution.x : resolution.y;
+    vec2  uv      = gl_FragCoord.xy / maxSide;
+    vec2  lightuv = vec2(light.x, resolution.y - light.y) / maxSide;
+    float dist    = distance(uv, lightuv);
+    float kl      = light.z / dist * fluctuation;
+    gl_FragColor  = texture2D(texture, uv) * kl;
+  }
+  </script>
+  
+  
+  <script type="text/javascript" src="scripts/app/dom.js"></script>
+  <script type="text/javascript" src="scripts/app/mouse.js"></script>
+  <script type="text/javascript" src="scripts/app/game.js"></script>
+  <script type="text/javascript" src="scripts/main.js"></script>
+	<script>
+  const dom  = app_dom_init(
+    window
+  , document
+  );
+  
+  const mouse = app_mouse_init();
+  
+  const game = app_game_init(
+    THREE
+  , dom
+  , mouse
+  , "shader_06_lighting_real"
+  );
+  
+  main_init(
+    THREE
+  , dom
+  , game
+  );
+	</script>
+  
+  <!-- 
+  
+  Uniform      GLSL          JavaScript 
+  type string	 type          type
+  
+  'i', '1i'   = int         = Number
+  'f', '1f'   = float       = Number
+  'v2'        = vec2        = THREE.Vector2
+  'v3'        = vec3        = THREE.Vector3
+  'c'	        = vec3        = THREE.Color
+  'v4'	      = vec4        = THREE.Vector4
+  'm3'	      = mat3        = THREE.Matrix3
+  'm4'	      = mat4        = THREE.Matrix4
+  't'	        = sampler2D   = THREE.Texture
+  't'	        = samplerCube = THREE.CubeTexture
+  -->
+</body>
+</html>

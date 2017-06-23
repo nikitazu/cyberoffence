@@ -53,7 +53,7 @@ function app_game_init(
     
     scene.add(cube);
     scene.add(sprite);
-    //scene.add(ground);
+    scene.add(ground);
     //scene.add(ceiling);
     //scene.add(wallA);
     //scene.add(wallB);
@@ -81,11 +81,11 @@ function app_game_init(
       uniforms.light.value.y = event.clientY;
       
       mouse.update(event.clientX, event.clientY);
-      const dx = mouse.getDx();
-      const dy = mouse.getDy();
-      const mouseSpeed = 0.001;
-      camera.rotation.y -= (dx * mouseSpeed);
-      camera.rotation.x -= (dy * mouseSpeed);
+      //const dx = mouse.getDx();
+      //const dy = mouse.getDy();
+      //const mouseSpeed = 0.001;
+      //camera.rotation.y -= (dx * mouseSpeed);
+      //camera.rotation.x -= (dy * mouseSpeed);
     });
     
     dom.setOnKeyDown(function (event) {

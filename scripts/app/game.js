@@ -102,58 +102,54 @@ function app_game_init(
       //camera.rotation.x -= (dy * mouseSpeed);
     });
     
+    const key = {
+      a: 65,
+      d: 68,
+      s: 83,
+      w: 87
+    };
+    
     dom.setOnKeyDown(function (event) {
-      const a = 65;
-      const s = 83;
-      const d = 68;
-      const w = 87;
-      const walkSpeed = 0.5;
-      
       switch (event.which) {
-      case a:
+      case key.a:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
         , movement.key.backwardDown
         );
         break;
-      case d:
+      case key.d:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
         , movement.key.forwardDown
         );
         break;
-      case s:
-        fighterA.m.position.y -= walkSpeed;
+      case key.s:
+        // todo crouch down
         break;
-      case w:
+      case key.w:
         fighterController.jump(fighterA.m);
         break;
       }
     });
     
     dom.setOnKeyUp(function (event) {
-      const a = 65;
-      const s = 83;
-      const d = 68;
-      const w = 87;
-      const walkSpeed = 0.5;
-      
       switch (event.which) {
-      case a:
+      case key.a:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
         , movement.key.backwardUp
         );
         break;
-      case d:
+      case key.d:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
         , movement.key.forwardUp
         );
         break;
-      case s:
+      case key.s:
+        // todo crouch up
         break;
-      case w:
+      case key.w:
         break;
       }
     });

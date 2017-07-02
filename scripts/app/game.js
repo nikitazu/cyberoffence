@@ -13,9 +13,14 @@ function app_game_init(
   , movement
   );
   
+  // Heads-Up Display
+  const hudController     = new app_ui_hud_controller();
+  
   let cube;
   let sprite;
   
+  let hudA;
+  let hudB;
   let ground;
   let fighterA;
   let fighterB;
@@ -55,18 +60,26 @@ function app_game_init(
     cube = make_cube();
     sprite = make_shaded_sprite(fragShader, uniforms);
     
+    hudA = make_hud();
+    hudB = make_hud();
     ground = make_ground2();
     fighterA = make_fighter();
     fighterB = make_fighter();
-    
+
     scene.add(cube);
     scene.add(sprite);
+
+    camera.add(hudA.v.sprite);
+    camera.add(hudB.v.sprite);
     scene.add(ground.v.sprite);
     scene.add(fighterA.v.sprite);
     scene.add(fighterB.v.sprite);
     
     cube.position.z = -3;
     sprite.position.z = -20;
+    
+    hudA.m.position.x = -.7;
+    hudB.m.position.x = 0.7;
     
     ground.m.position.z = -7;
     ground.m.position.y = -5;
@@ -159,11 +172,15 @@ function app_game_init(
 
 	function render(scene, camera) {
     // update
+    hudController.update(hudA.m);
+    hudController.update(hudB.m);
     arenaController.update(ground.m);
     fighterController.update(fighterA.m);
     fighterController.update(fighterB.m);
     
     // render
+    hudController.render(hudA.m, hudA.v);
+    hudController.render(hudB.m, hudB.v);
     arenaController.render(ground.m, ground.v);
     fighterController.render(fighterA.m, fighterA.v);
     fighterController.render(fighterB.m, fighterB.v);
@@ -219,6 +236,13 @@ function app_game_init(
       , uniforms: uniforms
       })
     );
+  }
+  
+  function make_hud() {
+    return {
+      m: new app_ui_hud_model()
+    , v: new app_ui_hud_view(three)
+    };
   }
   
   function make_ground2() {

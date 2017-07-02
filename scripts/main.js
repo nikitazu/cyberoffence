@@ -21,7 +21,8 @@
     , dom.getWindowAspectRatio()
 		, 0.1
 		, 1000
-		);
+		);    
+    scene.add(camera);
 		//We create the WebGL renderer and add it to the document
 		renderer = new three.WebGLRenderer();
 		renderer.setSize(

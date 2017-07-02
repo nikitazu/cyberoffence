@@ -8,6 +8,7 @@ function app_game_init(
   const movement          = new app_mechanics_movement();
   
   const arenaController   = new app_arena_controller();
+  const attackController  = new app_attack_controller();
   const fighterController = new app_fighter_controller(
     jumping
   , movement
@@ -22,6 +23,7 @@ function app_game_init(
   let hudA;
   let hudB;
   let ground;
+  let attacks;
   let fighterA;
   let fighterB;
   
@@ -63,6 +65,7 @@ function app_game_init(
     hudA = make_hud();
     hudB = make_hud();
     ground = make_ground2();
+    attacks = make_attacks();
     fighterA = make_fighter();
     fighterB = make_fighter();
 
@@ -105,10 +108,13 @@ function app_game_init(
       d: 68,
       s: 83,
       w: 87,
+      f: 70,
+      
       left: 37,
       up: 38,
       right: 39,
-      down: 40
+      down: 40,
+      n0: 48
     };
     
     dom.setOnKey((event, isKeyDown) => {
@@ -138,6 +144,17 @@ function app_game_init(
         , isKeyDown
         );
         break;
+      case key.f:
+        if (isKeyDown) {
+          const attack = make_attack_item();
+          attack.m.position.x = fighterA.m.position.x + 1;
+          attack.m.position.y = fighterA.m.position.y;
+          attack.m.position.z = fighterA.m.position.z;
+          scene.add(attack.v.sprite);
+          attacks.m.attacks.push(attack.m);
+          attacks.v.attacks.push(attack.v);
+        }
+        break;
         
       case key.left:
         fighterB.m.movementState = movement.move(
@@ -163,6 +180,9 @@ function app_game_init(
         , isKeyDown
         );
         break;
+      case key.n0:
+        // todo attack
+        break;
         
       default:
         console.log("KEY " + event.which);
@@ -175,13 +195,23 @@ function app_game_init(
     hudController.update(hudA.m);
     hudController.update(hudB.m);
     arenaController.update(ground.m);
+    attackController.update(attacks.m);
     fighterController.update(fighterA.m);
     fighterController.update(fighterB.m);
+    
+    attacks.m.garbageIndices.forEach(i => {
+      attacks.m.attacks.splice(i, 1);
+      const view = attacks.v.attacks[i];
+      scene.remove(view.sprite);
+      attacks.v.attacks.splice(i, 1);
+    });
+    attacks.m.garbageIndices = [];
     
     // render
     hudController.render(hudA.m, hudA.v);
     hudController.render(hudB.m, hudB.v);
     arenaController.render(ground.m, ground.v);
+    attackController.render(attacks.m, attacks.v);
     fighterController.render(fighterA.m, fighterA.v);
     fighterController.render(fighterB.m, fighterB.v);
     
@@ -249,6 +279,20 @@ function app_game_init(
     return {
       m: new app_arena_model()
     , v: new app_arena_view(three)
+    };
+  }
+  
+  function make_attacks() {
+    return {
+      m: new app_attack_model()
+    , v: new app_attack_view(three)
+    };
+  }
+  
+  function make_attack_item() {
+    return {
+      m: new app_attack_model_item()
+    , v: new app_attack_view_item(three)
     };
   }
   

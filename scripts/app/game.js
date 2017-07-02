@@ -16,7 +16,7 @@ function app_game_init(
   );
   
   // Heads-Up Display
-  const hudController     = new app_ui_hud_controller();
+  const hudController     = new app_ui_hud_controller(three);
   
   let cube;
   let sprite;
@@ -63,8 +63,8 @@ function app_game_init(
     cube = make_cube();
     sprite = make_shaded_sprite(fragShader, uniforms);
     
-    hudA = make_hud();
-    hudB = make_hud();
+    hudA = hudController.create(camera, true);
+    hudB = hudController.create(camera, false)
     arena = arenaController.create(scene);
     attacks = make_attacks();
     fighterA = fighterController.create(scene, true);
@@ -72,15 +72,9 @@ function app_game_init(
 
     scene.add(cube);
     scene.add(sprite);
-
-    camera.add(hudA.v.sprite);
-    camera.add(hudB.v.sprite);
     
     cube.position.z = -3;
     sprite.position.z = -20;
-    
-    hudA.m.position.x = -.7;
-    hudB.m.position.x = 0.7;
 
     dom.setOnMouseMove(function (event) {
       uniforms.light.value.x = event.clientX;
@@ -179,8 +173,8 @@ function app_game_init(
 
 	function render(scene, camera) {
     // update
-    hudController.update(hudA.m);
-    hudController.update(hudB.m);
+    hudController.update(hudA.model);
+    hudController.update(hudB.model);
     arenaController.update(arena.model);
     attackController.update(attacks.model);
     fighterController.update(fighterA.model);
@@ -190,8 +184,8 @@ function app_game_init(
     attackController.cleanUp(scene, attacks);
     
     // render
-    hudController.render(hudA.m, hudA.v);
-    hudController.render(hudB.m, hudB.v);
+    hudController.render(hudA);
+    hudController.render(hudB);
     arenaController.render(arena);
     attackController.render(attacks);
     fighterController.render(fighterA);
@@ -248,13 +242,6 @@ function app_game_init(
       , uniforms: uniforms
       })
     );
-  }
-  
-  function make_hud() {
-    return {
-      m: new app_ui_hud_model()
-    , v: new app_ui_hud_view(three)
-    };
   }
   
   function make_attacks() {

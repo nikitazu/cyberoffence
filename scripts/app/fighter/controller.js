@@ -26,8 +26,10 @@ function app_fighter_controller(
   };
   
   this.render = function (model, view) {
+    const deltaY = -1;
+    const deltaZ = -10;
     view.sprite.position.x = model.position.x;
-    view.sprite.position.y = model.position.y;
-    view.sprite.position.z = model.position.z;
+    view.sprite.position.y = model.position.y + deltaY;
+    view.sprite.position.z = model.position.z + deltaZ;
   };
 }

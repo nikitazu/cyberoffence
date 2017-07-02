@@ -69,11 +69,9 @@ function app_game_init(
     sprite.position.z = -20;
     
     ground.m.position.z = -7;
-    fighterA.m.position.z = -19;
-    fighterB.m.position.z = -19;
-    
     ground.m.position.y = -5;
     ground.m.rotation.x = 3/2*Math.PI;
+
     fighterA.m.position.x = -5;
     fighterB.m.position.x = 5;
 
@@ -93,11 +91,16 @@ function app_game_init(
       a: 65,
       d: 68,
       s: 83,
-      w: 87
+      w: 87,
+      left: 37,
+      up: 38,
+      right: 39,
+      down: 40
     };
     
     dom.setOnKey((event, isKeyDown) => {
       switch (event.which) {
+        
       case key.a:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
@@ -121,13 +124,40 @@ function app_game_init(
         , jumping.key.jump
         , isKeyDown
         );
-        //fighterController.jump(fighterA.m);
         break;
+        
+      case key.left:
+        fighterB.m.movementState = movement.move(
+          fighterB.m.movementState
+        , movement.key.backward
+        , isKeyDown
+        );
+        break;
+      case key.right:
+        fighterB.m.movementState = movement.move(
+          fighterB.m.movementState
+        , movement.key.forward
+        , isKeyDown
+        );
+        break;
+      case key.down:
+        // todo crouch
+        break;
+      case key.up:
+        fighterB.m.jumpingState = jumping.jump(
+          fighterB.m.jumpingState
+        , jumping.key.jump
+        , isKeyDown
+        );
+        break;
+        
+      default:
+        console.log("KEY " + event.which);
       }
     });
 	}
 
-	function render() {
+	function render(scene, camera) {
     // update
     arenaController.update(ground.m);
     fighterController.update(fighterA.m);
@@ -137,6 +167,23 @@ function app_game_init(
     arenaController.render(ground.m, ground.v);
     fighterController.render(fighterA.m, fighterA.v);
     fighterController.render(fighterB.m, fighterB.v);
+    
+    // camera
+    camera.position.x = (
+      fighterA.v.sprite.position.x
+    + fighterB.v.sprite.position.x
+    ) / 2;
+    
+    const deltaX = Math.abs(
+      fighterA.v.sprite.position.x - fighterB.v.sprite.position.x
+    );
+    const deltaY = Math.abs(
+      fighterA.v.sprite.position.y - fighterB.v.sprite.position.y
+    );
+    
+    camera.position.z = deltaX / 10;
+    camera.position.y = deltaY / 5;
+    
     cube.rotation.x += 0.02;
     uniforms.resolution.value.x = dom.getWindowInnerWidth();
     uniforms.resolution.value.y = dom.getWindowInnerHeight();

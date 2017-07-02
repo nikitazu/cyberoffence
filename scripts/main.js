@@ -32,7 +32,7 @@
 	}
 	
 	function render() {
-    game.render();
+    game.render(scene, camera);
 		requestAnimationFrame( render );
 		renderer.render( scene, camera );
 	}

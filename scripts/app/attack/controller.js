@@ -1,7 +1,15 @@
 function app_attack_controller(
     three
 ) {
-  this.create = function (scene, attacks, fighter) {
+  this.create = function () {
+    const attacks = new app_attack_view(
+      three
+    , new app_attack_model()
+    );
+    return attacks;
+  };
+  
+  this.createItem = function (scene, attacks, fighter) {
     const attack = make_attack_item();
     attack.model.position.x = fighter.model.position.x + 1;
     attack.model.position.y = fighter.model.position.y;

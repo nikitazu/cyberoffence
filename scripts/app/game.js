@@ -66,7 +66,7 @@ function app_game_init(
     hudA = hudController.create(camera, true);
     hudB = hudController.create(camera, false)
     arena = arenaController.create(scene);
-    attacks = make_attacks();
+    attacks = attackController.create();
     fighterA = fighterController.create(scene, true);
     fighterB = fighterController.create(scene, false);
 
@@ -131,7 +131,7 @@ function app_game_init(
         break;
       case key.f:
         if (isKeyDown) {
-          attackController.create(scene, attacks, fighterA);
+          attackController.createItem(scene, attacks, fighterA);
         }
         break;
         
@@ -161,7 +161,7 @@ function app_game_init(
         break;
       case key.n0:
         if (isKeyDown) {
-          attackController.create(scene, attacks, fighterB);
+          attackController.createItem(scene, attacks, fighterB);
         }
         break;
         
@@ -243,14 +243,7 @@ function app_game_init(
       })
     );
   }
-  
-  function make_attacks() {
-    return new app_attack_view(
-      three
-    , new app_attack_model()
-    );
-  }
-  
+
   function load_texture(url) {
     const done = texture => uniforms.texture.value = texture;
     const progress = xhr => console.log("txld: " + (xhr.loaded / xhr.total * 100) + "%");

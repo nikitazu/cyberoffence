@@ -11,6 +11,8 @@ function app_game_init(
   let wallA;
   let wallB;
   let wallFront;
+  let fighterA;
+  let fighterB;
   let uniforms;
 
   const textureLoader = new three.TextureLoader();
@@ -50,6 +52,8 @@ function app_game_init(
     wallA = make_wall(0x664411);
     wallB = make_wall(0x664411);
     wallFront = make_wall(0x553300);
+    fighterA = make_fighter();
+    fighterB = make_fighter();
     
     scene.add(cube);
     scene.add(sprite);
@@ -58,6 +62,8 @@ function app_game_init(
     //scene.add(wallA);
     //scene.add(wallB);
     //scene.add(wallFront);
+    scene.add(fighterA.v.sprite);
+    scene.add(fighterB.v.sprite);
     
     cube.position.z = -3;
     sprite.position.z = -20;
@@ -66,6 +72,8 @@ function app_game_init(
     wallA.position.z = -7;
     wallB.position.z = -7;
     wallFront.position.z = -11;
+    fighterA.m.position.z = -19;
+    fighterB.m.position.z = -19;
     
     ground.position.y = -5;
     ground.rotation.x = 3/2*Math.PI;
@@ -75,6 +83,8 @@ function app_game_init(
     wallA.rotation.y = Math.PI/2;
     wallB.position.x = 5;
     wallB.rotation.y = 3/2*Math.PI;
+    fighterA.m.position.x = 5;
+    fighterB.m.position.x = -5;
 
     dom.setOnMouseMove(function (event) {
       uniforms.light.value.x = event.clientX;
@@ -113,6 +123,8 @@ function app_game_init(
 	}
 
 	function render() {
+    fighterA.c.render(fighterA.m, fighterA.v);
+    fighterB.c.render(fighterB.m, fighterB.v);
     cube.rotation.x += 0.02;
     uniforms.resolution.value.x = dom.getWindowInnerWidth();
     uniforms.resolution.value.y = dom.getWindowInnerHeight();
@@ -128,7 +140,7 @@ function app_game_init(
   
   function make_shaded_sprite(shader, uniforms) {
     return new three.Mesh(
-      new three.PlaneGeometry(10, 10),
+      new three.PlaneGeometry(50, 50),
       new three.ShaderMaterial({
         fragmentShader: shader
       , uniforms: uniforms
@@ -145,9 +157,16 @@ function app_game_init(
   
   function make_wall(color) {
     return new three.Mesh(
-      new three.PlaneGeometry(10, 10)
+      new three.PlaneGeometry(3, 7)
     , new three.MeshBasicMaterial({ color: color })
     );
+  }
+  
+  function make_fighter() {
+    const m = new app_fighter_model();
+    const v = new app_fighter_view(three);
+    const c = new app_fighter_controller();
+    return { m:m, v:v, c:c };
   }
   
   function load_texture(url) {

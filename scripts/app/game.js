@@ -113,13 +113,13 @@ function app_game_init(
       case a:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
-        , 2
+        , movement.key.backwardDown
         );
         break;
       case d:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
-        , 0
+        , movement.key.forwardDown
         );
         break;
       case s:
@@ -142,13 +142,13 @@ function app_game_init(
       case a:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
-        , 3
+        , movement.key.backwardUp
         );
         break;
       case d:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
-        , 1
+        , movement.key.forwardUp
         );
         break;
       case s:
@@ -205,7 +205,7 @@ function app_game_init(
   }
   
   function make_fighter() {
-    const m = new app_fighter_model();
+    const m = new app_fighter_model(movement);
     const v = new app_fighter_view(three);
     return { m:m, v:v };
   }

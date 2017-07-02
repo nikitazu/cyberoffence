@@ -23,10 +23,10 @@ function app_dom_init(
   
   this.setOnMouseMove = f =>
     document.onmousemove = f;
-  
-  this.setOnKeyDown = f =>
-    document.onkeydown = f;
-  
-  this.setOnKeyUp = f =>
-    document.onkeyup = f;
+
+  this.setOnKey = f => {
+    const isDown = true;
+    document.onkeydown = e => f(e, isDown);
+    document.onkeyup   = e => f(e, !isDown);
+  };
 }

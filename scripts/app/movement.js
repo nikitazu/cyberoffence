@@ -6,34 +6,32 @@ function app_movement() {
   };
   
   this.key = {
-    forwardDown: 0,
-    forwardUp: 1,
-    backwardDown: 2,
-    backwardUp: 3
+    forward: 0,
+    backward: 1
   };
   
-  this.move = function (state, key) {
+  this.move = function (state, key, isKeyDown) {
     switch (state) {
     case this.state.idle:
-      if (key === this.key.forwardDown) {
+      if (key === this.key.forward && isKeyDown) {
         return this.state.forward;
-      } else if (key === this.key.backwardDown) {
+      } else if (key === this.key.backward && isKeyDown) {
         return this.state.backward;
       } else {
         return state;
       }
     case this.state.forward:
-      if (key === this.key.forwardUp) {
+      if (key === this.key.forward && !isKeyDown) {
         return this.state.idle;
-      } else if (key === this.key.backwardDown) {
+      } else if (key === this.key.backward && isKeyDown) {
         return this.state.backward;
       } else {
         return state;
       }
     case this.state.backward:
-      if (key === this.key.backwardUp) {
+      if (key === this.key.backward && !isKeyDown) {
         return this.state.idle;
-      } else if (key === this.key.forwardDown) {
+      } else if (key === this.key.forward && isKeyDown) {
         return this.state.forward;
       } else {
         return state;

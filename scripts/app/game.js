@@ -109,47 +109,27 @@ function app_game_init(
       w: 87
     };
     
-    dom.setOnKeyDown(function (event) {
+    dom.setOnKey((event, isKeyDown) => {
       switch (event.which) {
       case key.a:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
-        , movement.key.backwardDown
+        , movement.key.backward
+        , isKeyDown
         );
         break;
       case key.d:
         fighterA.m.movementState = movement.move(
           fighterA.m.movementState
-        , movement.key.forwardDown
+        , movement.key.forward
+        , isKeyDown
         );
         break;
       case key.s:
-        // todo crouch down
+        // todo crouch
         break;
       case key.w:
         fighterController.jump(fighterA.m);
-        break;
-      }
-    });
-    
-    dom.setOnKeyUp(function (event) {
-      switch (event.which) {
-      case key.a:
-        fighterA.m.movementState = movement.move(
-          fighterA.m.movementState
-        , movement.key.backwardUp
-        );
-        break;
-      case key.d:
-        fighterA.m.movementState = movement.move(
-          fighterA.m.movementState
-        , movement.key.forwardUp
-        );
-        break;
-      case key.s:
-        // todo crouch up
-        break;
-      case key.w:
         break;
       }
     });

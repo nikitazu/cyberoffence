@@ -6,19 +6,20 @@ function app_game_init(
 ) {
   const jumping           = new app_mechanics_jumping();
   const movement          = new app_mechanics_movement();
+  
+  const arenaController   = new app_arena_controller();
   const fighterController = new app_fighter_controller(
     jumping
   , movement
   );
+  
   let cube;
   let sprite;
+  
   let ground;
-  let ceiling;
-  let wallA;
-  let wallB;
-  let wallFront;
   let fighterA;
   let fighterB;
+  
   let uniforms;
 
   const textureLoader = new three.TextureLoader();
@@ -53,44 +54,28 @@ function app_game_init(
 
     cube = make_cube();
     sprite = make_shaded_sprite(fragShader, uniforms);
-    ground = make_ground();
-    ceiling = make_ground();
-    wallA = make_wall(0x664411);
-    wallB = make_wall(0x664411);
-    wallFront = make_wall(0x553300);
+    
+    ground = make_ground2();
     fighterA = make_fighter();
     fighterB = make_fighter();
     
     scene.add(cube);
     scene.add(sprite);
-    scene.add(ground);
-    //scene.add(ceiling);
-    //scene.add(wallA);
-    //scene.add(wallB);
-    //scene.add(wallFront);
+    scene.add(ground.v.sprite);
     scene.add(fighterA.v.sprite);
     scene.add(fighterB.v.sprite);
     
     cube.position.z = -3;
     sprite.position.z = -20;
-    ground.position.z = -7;
-    ceiling.position.z = -7;
-    wallA.position.z = -7;
-    wallB.position.z = -7;
-    wallFront.position.z = -11;
+    
+    ground.m.position.z = -7;
     fighterA.m.position.z = -19;
     fighterB.m.position.z = -19;
     
-    ground.position.y = -5;
-    ground.rotation.x = 3/2*Math.PI;
-    ceiling.position.y = 5;
-    ceiling.rotation.x = Math.PI/2;
-    wallA.position.x = -5;
-    wallA.rotation.y = Math.PI/2;
-    wallB.position.x = 5;
-    wallB.rotation.y = 3/2*Math.PI;
-    fighterA.m.position.x = 5;
-    fighterB.m.position.x = -5;
+    ground.m.position.y = -5;
+    ground.m.rotation.x = 3/2*Math.PI;
+    fighterA.m.position.x = -5;
+    fighterB.m.position.x = 5;
 
     dom.setOnMouseMove(function (event) {
       uniforms.light.value.x = event.clientX;
@@ -144,10 +129,12 @@ function app_game_init(
 
 	function render() {
     // update
+    arenaController.update(ground.m);
     fighterController.update(fighterA.m);
     fighterController.update(fighterB.m);
     
     // render
+    arenaController.render(ground.m, ground.v);
     fighterController.render(fighterA.m, fighterA.v);
     fighterController.render(fighterB.m, fighterB.v);
     cube.rotation.x += 0.02;
@@ -173,27 +160,21 @@ function app_game_init(
     );
   }
   
-  function make_ground() {
-    return new three.Mesh(
-      new three.PlaneGeometry(10, 10)
-    , new three.MeshBasicMaterial({ color: 0x552200 })
-    );
-  }
-  
-  function make_wall(color) {
-    return new three.Mesh(
-      new three.PlaneGeometry(3, 7)
-    , new three.MeshBasicMaterial({ color: color })
-    );
+  function make_ground2() {
+    return {
+      m: new app_arena_model()
+    , v: new app_arena_view(three)
+    };
   }
   
   function make_fighter() {
-    const m = new app_fighter_model(
-      jumping
-    , movement
-    );
-    const v = new app_fighter_view(three);
-    return { m:m, v:v };
+    return {
+      m: new app_fighter_model(
+        jumping
+      , movement
+      )
+    , v: new app_fighter_view(three)
+    };
   }
   
   function load_texture(url) {

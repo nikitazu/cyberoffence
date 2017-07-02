@@ -12,8 +12,7 @@ function app_attack_controller() {
   this.cleanUp = function (scene, model, view) {
     model.garbageIndices.forEach(i => {
       model.attacks.splice(i, 1);
-      const v = view.attacks[i];
-      scene.remove(v.sprite);
+      scene.remove(view.attacks[i].sprite);
       view.attacks.splice(i, 1);
     });
     model.garbageIndices = [];

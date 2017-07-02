@@ -8,7 +8,7 @@ function app_game_init(
   const movement          = new app_mechanics_movement();
   
   const arenaController   = new app_arena_controller();
-  const attackController  = new app_attack_controller();
+  const attackController  = new app_attack_controller(three);
   const fighterController = new app_fighter_controller(
     jumping
   , movement
@@ -146,13 +146,7 @@ function app_game_init(
         break;
       case key.f:
         if (isKeyDown) {
-          const attack = make_attack_item();
-          attack.m.position.x = fighterA.m.position.x + 1;
-          attack.m.position.y = fighterA.m.position.y;
-          attack.m.position.z = fighterA.m.position.z;
-          scene.add(attack.v.sprite);
-          attacks.m.attacks.push(attack.m);
-          attacks.v.attacks.push(attack.v);
+          attackController.create(scene, attacks, fighterA);
         }
         break;
         
@@ -181,7 +175,9 @@ function app_game_init(
         );
         break;
       case key.n0:
-        // todo attack
+        if (isKeyDown) {
+          attackController.create(scene, attacks, fighterB);
+        }
         break;
         
       default:
@@ -195,18 +191,18 @@ function app_game_init(
     hudController.update(hudA.m);
     hudController.update(hudB.m);
     arenaController.update(ground.m);
-    attackController.update(attacks.m);
+    attackController.update(attacks.model);
     fighterController.update(fighterA.m);
     fighterController.update(fighterB.m);
     
     // cleanUp
-    attackController.cleanUp(scene, attacks.m, attacks.v);
+    attackController.cleanUp(scene, attacks);
     
     // render
     hudController.render(hudA.m, hudA.v);
     hudController.render(hudB.m, hudB.v);
     arenaController.render(ground.m, ground.v);
-    attackController.render(attacks.m, attacks.v);
+    attackController.render(attacks);
     fighterController.render(fighterA.m, fighterA.v);
     fighterController.render(fighterB.m, fighterB.v);
     
@@ -278,19 +274,12 @@ function app_game_init(
   }
   
   function make_attacks() {
-    return {
-      m: new app_attack_model()
-    , v: new app_attack_view(three)
-    };
+    return new app_attack_view(
+      three
+    , new app_attack_model()
+    );
   }
-  
-  function make_attack_item() {
-    return {
-      m: new app_attack_model_item()
-    , v: new app_attack_view_item(three)
-    };
-  }
-  
+
   function make_fighter() {
     return {
       m: new app_fighter_model(

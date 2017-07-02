@@ -1,4 +1,16 @@
-function app_attack_controller() {
+function app_attack_controller(
+    three
+) {
+  this.create = function (scene, attacks, fighter) {
+    const attack = make_attack_item();
+    attack.model.position.x = fighter.m.position.x + 1;
+    attack.model.position.y = fighter.m.position.y;
+    attack.model.position.z = fighter.m.position.z;
+    scene.add(attack.sprite);
+    attacks.model.attacks.push(attack.model);
+    attacks.attacks.push(attack);
+  };
+  
   this.update = function (model) {
     model.attacks.forEach((attack, i) => {
       if (attack.frameIndex < attack.frameCount) {
@@ -9,30 +21,24 @@ function app_attack_controller() {
     });
   };
   
-  this.cleanUp = function (scene, model, view) {
-    model.garbageIndices.forEach(i => {
+  this.cleanUp = function (scene, view) {
+    view.model.garbageIndices.forEach(i => {
       scene.remove(view.attacks[i].sprite);
-      model.attacks.splice(i, 1);
+      view.model.attacks.splice(i, 1);
       view.attacks.splice(i, 1);
     });
-    model.garbageIndices = [];
+    view.model.garbageIndices = [];
   };
   
-  this.render = function (model, view) {
-    const deltaY = -1;
-    const deltaZ = -10;
-    view.attacks.forEach((attack, i) => {
-      const m = model.attacks[i];
-      attack.sprite.position.x = m.position.x;
-      attack.sprite.position.y = m.position.y + deltaY;
-      attack.sprite.position.z = m.position.z + deltaZ;
-      if (m.frameIndex > 90) {
-        attack.sprite.material.color.setHex(0x101000);
-      } else if (m.frameIndex > 50) {
-        attack.sprite.material.color.setHex(0xff0000);
-      } else if (m.frameIndex > 24) {
-        attack.sprite.material.color.setHex(0xffffff);
-      }
-    });
+  this.render = function (view) {
+    view.render();
   };
+  
+  
+  function make_attack_item() {
+    return new app_attack_view_item(
+      three
+    , new app_attack_model_item()
+    );
+  }
 }

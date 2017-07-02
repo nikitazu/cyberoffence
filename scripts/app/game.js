@@ -180,8 +180,8 @@ function app_game_init(
     arenaController.update(arena.model);
     attackController.update(attacksA.model);
     attackController.update(attacksB.model);
-    fighterController.update(fighterA.model);
-    fighterController.update(fighterB.model);
+    fighterController.update(fighterA.model, attacksB.model);
+    fighterController.update(fighterB.model, attacksA.model);
     
     // cleanUp
     attackController.cleanUp(scene, attacksA);

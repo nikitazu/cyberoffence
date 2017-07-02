@@ -16,7 +16,33 @@ function app_fighter_controller(
     return fighter;
   };
 
-  this.update = function (model) {
+  this.update = function (model, attacks) {
+    attacks.attacks.forEach(attack => {
+      if (!attack.damageApplied && attack.isDamagingFrame()) {
+        const x1 = attack.position.x;
+        const y1 = attack.position.y;
+        const w1 = 1;
+        const h1 = 1;
+
+        const x2 = model.position.x;
+        const y2 = model.position.y;
+        const w2 = 3;
+        const h2 = 7;
+
+        const isMissed =
+           (x1 + w1 < x2)
+        || (x2 + w2 < x1)
+        || (y1 + h1 < y2)
+        || (y2 + h2 < y1);
+
+        if (!isMissed) {
+          model.health -= attack.damage;
+          attack.damageApplied = true;
+          console.log("hit! " + model.health);
+        }
+      }
+    });
+
     model.position.x += (
       model.walkSpeed * movement.stateToSpeed(model.movementState)
     );

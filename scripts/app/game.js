@@ -78,8 +78,8 @@ function app_game_init(
     dom.setOnMouseMove(function (event) {
       uniforms.light.value.x = event.clientX;
       uniforms.light.value.y = event.clientY;
-      
-      mouse.update(event.clientX, event.clientY);
+
+      //mouse.update(event.clientX, event.clientY);
       //const dx = mouse.getDx();
       //const dy = mouse.getDy();
       //const mouseSpeed = 0.001;
@@ -188,6 +188,20 @@ function app_game_init(
     uniforms.resolution.value.x = dom.getWindowInnerWidth();
     uniforms.resolution.value.y = dom.getWindowInnerHeight();
     uniforms.ticks.value = dom.getTicks();
+    
+    uniforms.light.value.x = (
+      uniforms.resolution.value.x/2
+      + uniforms.resolution.value.x
+      * camera.position.x
+      / 50
+    );
+    
+    uniforms.light.value.y = (
+      uniforms.resolution.value.y/2
+      + uniforms.resolution.value.y 
+      * -camera.position.y
+      / 2
+    );
 	};
   
   function make_cube() {

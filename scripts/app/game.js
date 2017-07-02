@@ -7,7 +7,7 @@ function app_game_init(
   const jumping           = new app_mechanics_jumping();
   const movement          = new app_mechanics_movement();
   
-  const arenaController   = new app_arena_controller();
+  const arenaController   = new app_arena_controller(three);
   const attackController  = new app_attack_controller(three);
   const fighterController = new app_fighter_controller(
     jumping
@@ -22,7 +22,7 @@ function app_game_init(
   
   let hudA;
   let hudB;
-  let ground;
+  let arena;
   let attacks;
   let fighterA;
   let fighterB;
@@ -64,7 +64,7 @@ function app_game_init(
     
     hudA = make_hud();
     hudB = make_hud();
-    ground = make_ground2();
+    arena = arenaController.create(scene);
     attacks = make_attacks();
     fighterA = make_fighter();
     fighterB = make_fighter();
@@ -74,7 +74,6 @@ function app_game_init(
 
     camera.add(hudA.v.sprite);
     camera.add(hudB.v.sprite);
-    scene.add(ground.v.sprite);
     scene.add(fighterA.v.sprite);
     scene.add(fighterB.v.sprite);
     
@@ -83,10 +82,6 @@ function app_game_init(
     
     hudA.m.position.x = -.7;
     hudB.m.position.x = 0.7;
-    
-    ground.m.position.z = -7;
-    ground.m.position.y = -5;
-    ground.m.rotation.x = 3/2*Math.PI;
 
     fighterA.m.position.x = -5;
     fighterB.m.position.x = 5;
@@ -190,7 +185,7 @@ function app_game_init(
     // update
     hudController.update(hudA.m);
     hudController.update(hudB.m);
-    arenaController.update(ground.m);
+    arenaController.update(arena.model);
     attackController.update(attacks.model);
     fighterController.update(fighterA.m);
     fighterController.update(fighterB.m);
@@ -201,7 +196,7 @@ function app_game_init(
     // render
     hudController.render(hudA.m, hudA.v);
     hudController.render(hudB.m, hudB.v);
-    arenaController.render(ground.m, ground.v);
+    arenaController.render(arena);
     attackController.render(attacks);
     fighterController.render(fighterA.m, fighterA.v);
     fighterController.render(fighterB.m, fighterB.v);
@@ -263,13 +258,6 @@ function app_game_init(
     return {
       m: new app_ui_hud_model()
     , v: new app_ui_hud_view(three)
-    };
-  }
-  
-  function make_ground2() {
-    return {
-      m: new app_arena_model()
-    , v: new app_arena_view(three)
     };
   }
   

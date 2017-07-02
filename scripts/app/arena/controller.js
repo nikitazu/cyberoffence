@@ -1,14 +1,23 @@
-function app_arena_controller() {
+function app_arena_controller(
+  three
+) {
+  this.create = function (scene) {
+    const arena = new app_arena_view(
+      three
+    , new app_arena_model()
+    );
+    scene.add(arena.sprite);
+    arena.model.position.z = -7;
+    arena.model.position.y = -5;
+    arena.model.rotation.x = 3/2*Math.PI;
+    return arena;
+  };
+
   this.update = function (model) {
     // todo
   };
   
-  this.render = function (model, view) {
-    view.sprite.position.x = model.position.x;
-    view.sprite.position.y = model.position.y;
-    view.sprite.position.z = model.position.z;
-    view.sprite.rotation.x = model.rotation.x;
-    view.sprite.rotation.y = model.rotation.y;
-    view.sprite.rotation.z = model.rotation.z;
+  this.render = function (view) {
+    view.render();
   };
 }

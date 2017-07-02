@@ -24,7 +24,8 @@ function app_game_init(
   let hudA;
   let hudB;
   let arena;
-  let attacks;
+  let attacksA;
+  let attacksB;
   let fighterA;
   let fighterB;
   
@@ -66,7 +67,8 @@ function app_game_init(
     hudA = hudController.create(camera, true);
     hudB = hudController.create(camera, false)
     arena = arenaController.create(scene);
-    attacks = attackController.create();
+    attacksA = attackController.create();
+    attacksB = attackController.create();
     fighterA = fighterController.create(scene, true);
     fighterB = fighterController.create(scene, false);
 
@@ -131,7 +133,7 @@ function app_game_init(
         break;
       case key.f:
         if (isKeyDown) {
-          attackController.createItem(scene, attacks, fighterA);
+          attackController.createItem(scene, attacksA, fighterA);
         }
         break;
         
@@ -161,7 +163,7 @@ function app_game_init(
         break;
       case key.n0:
         if (isKeyDown) {
-          attackController.createItem(scene, attacks, fighterB);
+          attackController.createItem(scene, attacksB, fighterB);
         }
         break;
         
@@ -176,18 +178,21 @@ function app_game_init(
     hudController.update(hudA.model);
     hudController.update(hudB.model);
     arenaController.update(arena.model);
-    attackController.update(attacks.model);
+    attackController.update(attacksA.model);
+    attackController.update(attacksB.model);
     fighterController.update(fighterA.model);
     fighterController.update(fighterB.model);
     
     // cleanUp
-    attackController.cleanUp(scene, attacks);
+    attackController.cleanUp(scene, attacksA);
+    attackController.cleanUp(scene, attacksB);
     
     // render
     hudController.render(hudA);
     hudController.render(hudB);
     arenaController.render(arena);
-    attackController.render(attacks);
+    attackController.render(attacksA);
+    attackController.render(attacksB);
     fighterController.render(fighterA);
     fighterController.render(fighterB);
     

@@ -4,7 +4,10 @@ function app_game_init(
   , mouse
   , shaderId
   ) {
-  const fighterController = new app_fighter_controller();
+  const movement          = new app_movement();
+  const fighterController = new app_fighter_controller(
+    movement
+  );
   let cube;
   let sprite;
   let ground;
@@ -108,16 +111,49 @@ function app_game_init(
       
       switch (event.which) {
       case a:
-        fighterController.walk(fighterA.m, -1);
+        fighterA.m.movementState = movement.move(
+          fighterA.m.movementState
+        , 2
+        );
         break;
       case d:
-        fighterController.walk(fighterA.m, 1);
+        fighterA.m.movementState = movement.move(
+          fighterA.m.movementState
+        , 0
+        );
         break;
       case s:
         fighterA.m.position.y -= walkSpeed;
         break;
       case w:
         fighterController.jump(fighterA.m);
+        break;
+      }
+    });
+    
+    dom.setOnKeyUp(function (event) {
+      const a = 65;
+      const s = 83;
+      const d = 68;
+      const w = 87;
+      const walkSpeed = 0.5;
+      
+      switch (event.which) {
+      case a:
+        fighterA.m.movementState = movement.move(
+          fighterA.m.movementState
+        , 3
+        );
+        break;
+      case d:
+        fighterA.m.movementState = movement.move(
+          fighterA.m.movementState
+        , 1
+        );
+        break;
+      case s:
+        break;
+      case w:
         break;
       }
     });

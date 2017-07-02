@@ -5,4 +5,5 @@ function app_fighter_model() {
   this.walkSpeed = 0.5;
   this.jumpStatus = 0; // 0 ground, 1 rise, -1 fall
   this.jumpLength = 10;
+  this.movementState = 0; // idle
 }

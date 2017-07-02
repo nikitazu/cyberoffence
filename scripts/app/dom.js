@@ -27,6 +27,10 @@ function app_dom_init(
     document.onkeydown = f;
   }
   
+  function setOnKeyUp(f) {
+    document.onkeyup = f;
+  }
+  
   return {
     getWindowAspectRatio : getWindowAspectRatio
   , getWindowInnerWidth  : getWindowInnerWidth
@@ -36,5 +40,6 @@ function app_dom_init(
   , getTicks             : getTicks
   , setOnMouseMove       : setOnMouseMove
   , setOnKeyDown         : setOnKeyDown
+  , setOnKeyUp           : setOnKeyUp
   };
 }

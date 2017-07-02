@@ -9,6 +9,16 @@ function app_attack_controller() {
     });
   };
   
+  this.cleanUp = function (scene, model, view) {
+    model.garbageIndices.forEach(i => {
+      model.attacks.splice(i, 1);
+      const v = view.attacks[i];
+      scene.remove(v.sprite);
+      view.attacks.splice(i, 1);
+    });
+    model.garbageIndices = [];
+  };
+  
   this.render = function (model, view) {
     const deltaY = -1;
     const deltaZ = -10;

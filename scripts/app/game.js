@@ -199,13 +199,8 @@ function app_game_init(
     fighterController.update(fighterA.m);
     fighterController.update(fighterB.m);
     
-    attacks.m.garbageIndices.forEach(i => {
-      attacks.m.attacks.splice(i, 1);
-      const view = attacks.v.attacks[i];
-      scene.remove(view.sprite);
-      attacks.v.attacks.splice(i, 1);
-    });
-    attacks.m.garbageIndices = [];
+    // cleanUp
+    attackController.cleanUp(scene, attacks.m, attacks.v);
     
     // render
     hudController.render(hudA.m, hudA.v);

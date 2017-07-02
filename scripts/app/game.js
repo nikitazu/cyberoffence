@@ -103,26 +103,31 @@ function app_game_init(
       const s = 83;
       const d = 68;
       const w = 87;
-      const walkSpeed = 0.1;
+      const walkSpeed = 0.5;
       
       switch (event.which) {
       case a:
-        camera.position.x -= walkSpeed;
-        break;
-      case s:
-        camera.position.z += walkSpeed;
+        fighterA.c.walk(fighterA.m, -1);
         break;
       case d:
-        camera.position.x += walkSpeed;
+        fighterA.c.walk(fighterA.m, 1);
+        break;
+      case s:
+        fighterA.m.position.y -= walkSpeed;
         break;
       case w:
-        camera.position.z -= walkSpeed;
+        fighterA.c.jump(fighterA.m);
         break;
       }
     });
 	}
 
 	function render() {
+    // update
+    fighterA.c.update(fighterA.m);
+    fighterB.c.update(fighterB.m);
+    
+    // render
     fighterA.c.render(fighterA.m, fighterA.v);
     fighterB.c.render(fighterB.m, fighterB.v);
     cube.rotation.x += 0.02;

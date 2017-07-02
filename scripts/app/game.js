@@ -4,6 +4,7 @@ function app_game_init(
   , mouse
   , shaderId
   ) {
+  const fighterController = new app_fighter_controller();
   let cube;
   let sprite;
   let ground;
@@ -107,16 +108,16 @@ function app_game_init(
       
       switch (event.which) {
       case a:
-        fighterA.c.walk(fighterA.m, -1);
+        fighterController.walk(fighterA.m, -1);
         break;
       case d:
-        fighterA.c.walk(fighterA.m, 1);
+        fighterController.walk(fighterA.m, 1);
         break;
       case s:
         fighterA.m.position.y -= walkSpeed;
         break;
       case w:
-        fighterA.c.jump(fighterA.m);
+        fighterController.jump(fighterA.m);
         break;
       }
     });
@@ -124,12 +125,12 @@ function app_game_init(
 
 	function render() {
     // update
-    fighterA.c.update(fighterA.m);
-    fighterB.c.update(fighterB.m);
+    fighterController.update(fighterA.m);
+    fighterController.update(fighterB.m);
     
     // render
-    fighterA.c.render(fighterA.m, fighterA.v);
-    fighterB.c.render(fighterB.m, fighterB.v);
+    fighterController.render(fighterA.m, fighterA.v);
+    fighterController.render(fighterB.m, fighterB.v);
     cube.rotation.x += 0.02;
     uniforms.resolution.value.x = dom.getWindowInnerWidth();
     uniforms.resolution.value.y = dom.getWindowInnerHeight();
@@ -170,8 +171,7 @@ function app_game_init(
   function make_fighter() {
     const m = new app_fighter_model();
     const v = new app_fighter_view(three);
-    const c = new app_fighter_controller();
-    return { m:m, v:v, c:c };
+    return { m:m, v:v };
   }
   
   function load_texture(url) {

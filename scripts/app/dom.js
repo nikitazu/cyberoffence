@@ -3,43 +3,30 @@ function app_dom_init(
   , document
   ) {
   
-  const getWindowAspectRatio = () => window.innerWidth / window.innerHeight;
-  const getWindowInnerWidth = () => window.innerWidth;
-  const getWindowInnerHeight = () => window.innerHeight;
+  this.getWindowAspectRatio = () =>
+    window.innerWidth / window.innerHeight;
   
-  function documentAppend(element) {
-    document.body.appendChild(element);  
-  }
+  this.getWindowInnerWidth = () =>
+    window.innerWidth;
   
-  function getCodeById(id) {
-    return document.getElementById(id).innerHTML;
-  }
+  this.getWindowInnerHeight = () =>
+    window.innerHeight;
   
-  function getTicks() {
-    return performance.now();
-  }
+  this.documentAppend = element =>
+    document.body.appendChild(element);
   
-  function setOnMouseMove(f) {
+  this.getCodeById = id =>
+    document.getElementById(id).innerHTML;
+  
+  this.getTicks = () =>
+    performance.now();
+  
+  this.setOnMouseMove = f =>
     document.onmousemove = f;
-  }
   
-  function setOnKeyDown(f) {
+  this.setOnKeyDown = f =>
     document.onkeydown = f;
-  }
   
-  function setOnKeyUp(f) {
+  this.setOnKeyUp = f =>
     document.onkeyup = f;
-  }
-  
-  return {
-    getWindowAspectRatio : getWindowAspectRatio
-  , getWindowInnerWidth  : getWindowInnerWidth
-  , getWindowInnerHeight : getWindowInnerHeight
-  , documentAppend       : documentAppend
-  , getCodeById          : getCodeById
-  , getTicks             : getTicks
-  , setOnMouseMove       : setOnMouseMove
-  , setOnKeyDown         : setOnKeyDown
-  , setOnKeyUp           : setOnKeyUp
-  };
 }

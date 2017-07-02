@@ -1,4 +1,4 @@
-function app_movement() {
+function app_mechanics_movement() {
   this.state = {
     idle: 0,
     forward: 1,

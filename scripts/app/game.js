@@ -4,7 +4,7 @@ function app_game_init(
   , mouse
   , shaderId
   ) {
-  const movement          = new app_movement();
+  const movement          = new app_mechanics_movement();
   const fighterController = new app_fighter_controller(
     movement
   );

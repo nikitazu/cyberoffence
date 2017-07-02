@@ -3,10 +3,12 @@ function app_game_init(
   , dom
   , mouse
   , shaderId
-  ) {
+) {
+  const jumping           = new app_mechanics_jumping();
   const movement          = new app_mechanics_movement();
   const fighterController = new app_fighter_controller(
-    movement
+    jumping
+  , movement
   );
   let cube;
   let sprite;
@@ -129,7 +131,12 @@ function app_game_init(
         // todo crouch
         break;
       case key.w:
-        fighterController.jump(fighterA.m);
+        fighterA.m.jumpingState = jumping.jump(
+          fighterA.m.jumpingState
+        , jumping.key.jump
+        , isKeyDown
+        );
+        //fighterController.jump(fighterA.m);
         break;
       }
     });
@@ -181,7 +188,10 @@ function app_game_init(
   }
   
   function make_fighter() {
-    const m = new app_fighter_model(movement);
+    const m = new app_fighter_model(
+      jumping
+    , movement
+    );
     const v = new app_fighter_view(three);
     return { m:m, v:v };
   }

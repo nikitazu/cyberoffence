@@ -1,7 +1,21 @@
 function app_fighter_controller(
-    jumping
+    three
+  , jumping
   , movement
 ) {
+  this.create = function (scene, isFirst) {
+    const fighter = new app_fighter_view(
+      three
+    , new app_fighter_model(
+        jumping
+      , movement
+      )
+    );
+    scene.add(fighter.sprite);
+    fighter.model.position.x = isFirst ? -5 : 5;
+    return fighter;
+  };
+
   this.update = function (model) {
     model.position.x += (
       model.walkSpeed * movement.stateToSpeed(model.movementState)
@@ -25,11 +39,7 @@ function app_fighter_controller(
     }
   };
   
-  this.render = function (model, view) {
-    const deltaY = -1;
-    const deltaZ = -10;
-    view.sprite.position.x = model.position.x;
-    view.sprite.position.y = model.position.y + deltaY;
-    view.sprite.position.z = model.position.z + deltaZ;
+  this.render = function (view) {
+    view.render();
   };
 }

@@ -3,9 +3,9 @@ function app_attack_controller(
 ) {
   this.create = function (scene, attacks, fighter) {
     const attack = make_attack_item();
-    attack.model.position.x = fighter.m.position.x + 1;
-    attack.model.position.y = fighter.m.position.y;
-    attack.model.position.z = fighter.m.position.z;
+    attack.model.position.x = fighter.model.position.x + 1;
+    attack.model.position.y = fighter.model.position.y;
+    attack.model.position.z = fighter.model.position.z;
     scene.add(attack.sprite);
     attacks.model.attacks.push(attack.model);
     attacks.attacks.push(attack);

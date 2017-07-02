@@ -10,7 +10,8 @@ function app_game_init(
   const arenaController   = new app_arena_controller(three);
   const attackController  = new app_attack_controller(three);
   const fighterController = new app_fighter_controller(
-    jumping
+    three
+  , jumping
   , movement
   );
   
@@ -66,25 +67,20 @@ function app_game_init(
     hudB = make_hud();
     arena = arenaController.create(scene);
     attacks = make_attacks();
-    fighterA = make_fighter();
-    fighterB = make_fighter();
+    fighterA = fighterController.create(scene, true);
+    fighterB = fighterController.create(scene, false);
 
     scene.add(cube);
     scene.add(sprite);
 
     camera.add(hudA.v.sprite);
     camera.add(hudB.v.sprite);
-    scene.add(fighterA.v.sprite);
-    scene.add(fighterB.v.sprite);
     
     cube.position.z = -3;
     sprite.position.z = -20;
     
     hudA.m.position.x = -.7;
     hudB.m.position.x = 0.7;
-
-    fighterA.m.position.x = -5;
-    fighterB.m.position.x = 5;
 
     dom.setOnMouseMove(function (event) {
       uniforms.light.value.x = event.clientX;
@@ -116,15 +112,15 @@ function app_game_init(
       switch (event.which) {
         
       case key.a:
-        fighterA.m.movementState = movement.move(
-          fighterA.m.movementState
+        fighterA.model.movementState = movement.move(
+          fighterA.model.movementState
         , movement.key.backward
         , isKeyDown
         );
         break;
       case key.d:
-        fighterA.m.movementState = movement.move(
-          fighterA.m.movementState
+        fighterA.model.movementState = movement.move(
+          fighterA.model.movementState
         , movement.key.forward
         , isKeyDown
         );
@@ -133,8 +129,8 @@ function app_game_init(
         // todo crouch
         break;
       case key.w:
-        fighterA.m.jumpingState = jumping.jump(
-          fighterA.m.jumpingState
+        fighterA.model.jumpingState = jumping.jump(
+          fighterA.model.jumpingState
         , jumping.key.jump
         , isKeyDown
         );
@@ -146,15 +142,15 @@ function app_game_init(
         break;
         
       case key.left:
-        fighterB.m.movementState = movement.move(
-          fighterB.m.movementState
+        fighterB.model.movementState = movement.move(
+          fighterB.model.movementState
         , movement.key.backward
         , isKeyDown
         );
         break;
       case key.right:
-        fighterB.m.movementState = movement.move(
-          fighterB.m.movementState
+        fighterB.model.movementState = movement.move(
+          fighterB.model.movementState
         , movement.key.forward
         , isKeyDown
         );
@@ -163,8 +159,8 @@ function app_game_init(
         // todo crouch
         break;
       case key.up:
-        fighterB.m.jumpingState = jumping.jump(
-          fighterB.m.jumpingState
+        fighterB.model.jumpingState = jumping.jump(
+          fighterB.model.jumpingState
         , jumping.key.jump
         , isKeyDown
         );
@@ -187,8 +183,8 @@ function app_game_init(
     hudController.update(hudB.m);
     arenaController.update(arena.model);
     attackController.update(attacks.model);
-    fighterController.update(fighterA.m);
-    fighterController.update(fighterB.m);
+    fighterController.update(fighterA.model);
+    fighterController.update(fighterB.model);
     
     // cleanUp
     attackController.cleanUp(scene, attacks);
@@ -198,20 +194,20 @@ function app_game_init(
     hudController.render(hudB.m, hudB.v);
     arenaController.render(arena);
     attackController.render(attacks);
-    fighterController.render(fighterA.m, fighterA.v);
-    fighterController.render(fighterB.m, fighterB.v);
+    fighterController.render(fighterA);
+    fighterController.render(fighterB);
     
     // camera
     camera.position.x = (
-      fighterA.v.sprite.position.x
-    + fighterB.v.sprite.position.x
+      fighterA.sprite.position.x
+    + fighterB.sprite.position.x
     ) / 2;
     
     const deltaX = Math.abs(
-      fighterA.v.sprite.position.x - fighterB.v.sprite.position.x
+      fighterA.sprite.position.x - fighterB.sprite.position.x
     );
     const deltaY = Math.abs(
-      fighterA.v.sprite.position.y - fighterB.v.sprite.position.y
+      fighterA.sprite.position.y - fighterB.sprite.position.y
     );
     
     camera.position.z = deltaX / 10;
@@ -266,16 +262,6 @@ function app_game_init(
       three
     , new app_attack_model()
     );
-  }
-
-  function make_fighter() {
-    return {
-      m: new app_fighter_model(
-        jumping
-      , movement
-      )
-    , v: new app_fighter_view(three)
-    };
   }
   
   function load_texture(url) {

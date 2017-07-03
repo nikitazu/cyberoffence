@@ -16,11 +16,11 @@ function app_fighter_controller(
     return fighter;
   };
 
-  this.update = function (model, attacks) {
-    attacks.attacks.forEach(attack => {
-      if (!attack.damageApplied && attack.isDamagingFrame()) {
-        const x1 = attack.position.x;
-        const y1 = attack.position.y;
+  this.update = function (model, damage) {
+    damage.items.forEach(d => {
+      if (!d.isApplied && d.isDamagingFrame()) {
+        const x1 = d.position.x;
+        const y1 = d.position.y;
         const w1 = 1;
         const h1 = 1;
 
@@ -36,8 +36,8 @@ function app_fighter_controller(
         || (y2 + h2 < y1);
 
         if (!isMissed) {
-          model.health -= attack.damage;
-          attack.damageApplied = true;
+          model.health -= d.value;
+          d.isApplied = true;
           console.log("hit! " + model.health);
         }
       }

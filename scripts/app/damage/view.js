@@ -1,16 +1,16 @@
-function app_attack_view(
+function app_damage_view(
     three
   , model
 ) {
   this.model = model;
-  this.attacks = [];
+  this.items = [];
 
   this.render = function () {
-    this.attacks.forEach(attack => attack.render());
+    this.items.forEach(x => x.render());
   };
 }
 
-function app_attack_view_item(
+function app_damage_view_item(
     three
   , model
 ) {

@@ -8,7 +8,7 @@ function app_game_init(
   const movement          = new app_mechanics_movement();
   
   const arenaController   = new app_arena_controller(three);
-  const attackController  = new app_attack_controller(three);
+  const damageController  = new app_damage_controller(three);
   const fighterController = new app_fighter_controller(
     three
   , jumping
@@ -24,8 +24,8 @@ function app_game_init(
   let hudA;
   let hudB;
   let arena;
-  let attacksA;
-  let attacksB;
+  let damageA;
+  let damageB;
   let fighterA;
   let fighterB;
   
@@ -67,8 +67,8 @@ function app_game_init(
     hudA = hudController.create(camera, true);
     hudB = hudController.create(camera, false)
     arena = arenaController.create(scene);
-    attacksA = attackController.create();
-    attacksB = attackController.create();
+    damageA = damageController.create();
+    damageB = damageController.create();
     fighterA = fighterController.create(scene, true);
     fighterB = fighterController.create(scene, false);
 
@@ -133,7 +133,7 @@ function app_game_init(
         break;
       case key.f:
         if (isKeyDown) {
-          attackController.createItem(scene, attacksA, fighterA);
+          damageController.createItem(scene, damageA, fighterA);
         }
         break;
         
@@ -163,7 +163,7 @@ function app_game_init(
         break;
       case key.n0:
         if (isKeyDown) {
-          attackController.createItem(scene, attacksB, fighterB);
+          damageController.createItem(scene, damageB, fighterB);
         }
         break;
         
@@ -178,21 +178,21 @@ function app_game_init(
     hudController.update(hudA.model);
     hudController.update(hudB.model);
     arenaController.update(arena.model);
-    attackController.update(attacksA.model);
-    attackController.update(attacksB.model);
-    fighterController.update(fighterA.model, attacksB.model);
-    fighterController.update(fighterB.model, attacksA.model);
+    damageController.update(damageA.model);
+    damageController.update(damageB.model);
+    fighterController.update(fighterA.model, damageB.model);
+    fighterController.update(fighterB.model, damageA.model);
     
     // cleanUp
-    attackController.cleanUp(scene, attacksA);
-    attackController.cleanUp(scene, attacksB);
+    damageController.cleanUp(scene, damageA);
+    damageController.cleanUp(scene, damageB);
     
     // render
     hudController.render(hudA);
     hudController.render(hudB);
     arenaController.render(arena);
-    attackController.render(attacksA);
-    attackController.render(attacksB);
+    damageController.render(damageA);
+    damageController.render(damageB);
     fighterController.render(fighterA);
     fighterController.render(fighterB);
     

@@ -1,11 +1,20 @@
 function app_fighter_view(
-    three
-  , model
+  three
+, model
+, textures
 ) {
   this.model = model;
+
+  const material = new three.MeshBasicMaterial({
+    map: textures["images/dummy_stand_01.png"]
+  , color: 0xffffff
+  });
+  
+  material.transparent = true;
+
   this.sprite = new three.Mesh(
-    new three.PlaneGeometry(3, 7)
-  , new three.MeshBasicMaterial({ color: 0x552200 })
+    new three.PlaneGeometry(7, 7)
+  , material
   );
 
   this.render = function () {

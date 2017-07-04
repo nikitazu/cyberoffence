@@ -2,19 +2,22 @@ function app_fighter_controller(
     three
   , jumping
   , movement
+  , textures
 ) {
   this.create = function (scene, isFirst) {
-    const fighter = new app_fighter_view(
-      three
-    , new app_fighter_model(
-        jumping
-      , movement
-      )
-    );
+    const fighter = make_fighter_view();
     scene.add(fighter.sprite);
     fighter.model.position.x = isFirst ? -5 : 5;
     return fighter;
   };
+  
+  function make_fighter_view() {
+    return new app_fighter_view(three, make_fighter_model(), textures);
+  }
+  
+  function make_fighter_model() {
+    return new app_fighter_model(jumping, movement);
+  }
 
   this.update = function (model, damage) {
     damage.items.forEach(d => {

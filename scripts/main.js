@@ -8,10 +8,18 @@
 	let camera;
 	let renderer;
 
-	scene_setup();
-  game.start(scene, camera);
-  render();
-	
+  const textureLoader = new app_texture_loader(three, game.textures);
+  textureLoader.handleLoad(
+    textures => {
+    	scene_setup();
+      game.start(scene, camera, textures);
+      render();
+    },
+    () => {
+      console.log("load failure");
+    }
+  );
+
 	function scene_setup() {
 		//This is all code needed to set up a basic ThreeJS scene
 		//First we initialize the scene and our camera

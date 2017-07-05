@@ -1,10 +1,23 @@
 # PROTO:CYBER
-3D labyrinth
+2D Fighting
 
 # Dependencies
+## Buildtime
+* nodejs
+* webpack
+## Runtime
+### Server
+* nodejs
+### Client
 * browser
 * three.js
 * glsl
+
+# Build
+node build
+
+# Run
+node server
 
 # Some help
 ## GLSL built-in functions

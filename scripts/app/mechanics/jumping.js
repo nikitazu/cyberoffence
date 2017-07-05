@@ -1,15 +1,17 @@
-export default function () {
-  this.state = {
-    idle: 0,
-    riseUp: 1,
-    fallDown: 2
-  };
-  
-  this.key = {
-    jump: 0
-  };
-  
-  this.jump = function (state, key, isKeyDown) {
+export default class {
+  constructor() {
+    this.state = {
+      idle: 0,
+      riseUp: 1,
+      fallDown: 2
+    };
+
+    this.key = {
+      jump: 0
+    };
+  }
+
+  jump (state, key, isKeyDown) {
     switch (state) {
     case this.state.idle:
       if (key === this.key.jump && isKeyDown) {
@@ -24,9 +26,9 @@ export default function () {
     default:
       throw "Unknown state " + state;
     }
-  };
-  
-  this.fly = function (state, height, maxHeight) {
+  }
+
+  fly (state, height, maxHeight) {
     const onePixel = 1;
     switch (state) {
     case this.state.idle:
@@ -46,14 +48,14 @@ export default function () {
     default:
       throw "Unknown state " + state;
     }
-  };
-  
-  this.stateToSpeed = function (state) {
+  }
+
+  stateToSpeed (state) {
     switch (state) {
     case this.state.idle: return 0;
     case this.state.riseUp: return 1;
     case this.state.fallDown: return -1;
     default: throw "Unknown state " + state;
     }
-  };
+  }
 }

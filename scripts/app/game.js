@@ -1,14 +1,14 @@
-import mechanics_jumping from './mechanics/jumping.js';
-import mechanics_movement from './mechanics/movement.js';
+import Jumping from './mechanics/jumping.js';
+import Movement from './mechanics/movement.js';
 
 export default function (
   three
 , dom
 , mouse
 ) {
-  const jumping           = new mechanics_jumping();
-  const movement          = new mechanics_movement();
-  
+  const jumping   = new Jumping();
+  const movement  = new Movement();
+
   const arenaController   = new app_arena_controller(three);
   const damageController  = new app_damage_controller(three);
   let fighterController;

@@ -1,16 +1,18 @@
-export default function () {
-  this.state = {
-    idle: 0,
-    forward: 1,
-    backward: 2
-  };
-  
-  this.key = {
-    forward: 0,
-    backward: 1
-  };
-  
-  this.move = function (state, key, isKeyDown) {
+export default class {
+  constructor() {
+    this.state = {
+      idle: 0,
+      forward: 1,
+      backward: 2
+    };
+
+    this.key = {
+      forward: 0,
+      backward: 1
+    };
+  }
+
+  move (state, key, isKeyDown) {
     switch (state) {
     case this.state.idle:
       if (key === this.key.forward && isKeyDown) {
@@ -39,14 +41,14 @@ export default function () {
     default:
       throw "Unknown state " + state;
     }
-  };
-  
-  this.stateToSpeed = function (state) {
+  }
+
+  stateToSpeed (state) {
     switch (state) {
     case this.state.idle: return 0;
     case this.state.forward: return 1;
     case this.state.backward: return -1;
     default: throw "Unknown state " + state;
     }
-  };
+  }
 }

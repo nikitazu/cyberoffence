@@ -1,4 +1,4 @@
-function app_texture_loader(
+export default function (
   three
 , textures
 ) {

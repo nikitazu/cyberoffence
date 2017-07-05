@@ -1,5 +1,6 @@
 ﻿import * as dom from './app/dom.js';
 import * as mouse from './app/mouse.js';
+import texture_loader from './app/texture_loader.js';
 
 function main_init() {
   const three = THREE;
@@ -13,7 +14,7 @@ function main_init() {
   let camera;
   let renderer;
 
-  const textureLoader = new app_texture_loader(three, game.textures);
+  const textureLoader = new texture_loader(three, game.textures);
   textureLoader.handleLoad(
     textures => {
       scene_setup();

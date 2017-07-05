@@ -1,9 +1,8 @@
 ﻿import * as dom from './app/dom.js';
+import * as mouse from './app/mouse.js';
 
 function main_init() {
   const three = THREE;
-  const mouse = app_mouse_init();
-
   const game = app_game_init(
     three
   , dom

@@ -1,11 +1,7 @@
-﻿function main_init() {
+﻿import * as dom from './app/dom.js';
+
+function main_init() {
   const three = THREE;
-
-  const dom  = new app_dom_init(
-    window
-  , document
-  );
-
   const mouse = app_mouse_init();
 
   const game = app_game_init(
@@ -14,14 +10,14 @@
   , mouse
   );
 
-	let scene;
-	let camera;
-	let renderer;
+  let scene;
+  let camera;
+  let renderer;
 
   const textureLoader = new app_texture_loader(three, game.textures);
   textureLoader.handleLoad(
     textures => {
-    	scene_setup();
+      scene_setup();
       game.start(scene, camera, textures);
       render();
     },
@@ -30,31 +26,31 @@
     }
   );
 
-	function scene_setup() {
-		//This is all code needed to set up a basic ThreeJS scene
-		//First we initialize the scene and our camera
-		scene = new three.Scene();
-		camera = new three.PerspectiveCamera(
-			75
+  function scene_setup() {
+    //This is all code needed to set up a basic ThreeJS scene
+    //First we initialize the scene and our camera
+    scene = new three.Scene();
+    camera = new three.PerspectiveCamera(
+      75
     , dom.getWindowAspectRatio()
-		, 0.1
-		, 1000
-		);    
+    , 0.1
+    , 1000
+    );
     scene.add(camera);
-		//We create the WebGL renderer and add it to the document
-		renderer = new three.WebGLRenderer();
-		renderer.setSize(
+    //We create the WebGL renderer and add it to the document
+    renderer = new three.WebGLRenderer();
+    renderer.setSize(
       dom.getWindowInnerWidth()
     , dom.getWindowInnerHeight()
     );
     dom.documentAppend(renderer.domElement);
-	}
-	
-	function render() {
+  }
+
+  function render() {
     game.render(scene, camera);
-		requestAnimationFrame( render );
-		renderer.render( scene, camera );
-	}
+    requestAnimationFrame( render );
+    renderer.render( scene, camera );
+  }
 }
 
 main_init();

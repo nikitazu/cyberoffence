@@ -1,9 +1,19 @@
-﻿function main_init(
+﻿function main_init() {
+  const three = THREE;
+
+  const dom  = new app_dom_init(
+    window
+  , document
+  );
+
+  const mouse = app_mouse_init();
+
+  const game = app_game_init(
     three
   , dom
-  , game
-  ) {
-  
+  , mouse
+  );
+
 	let scene;
 	let camera;
 	let renderer;
@@ -46,3 +56,5 @@
 		renderer.render( scene, camera );
 	}
 }
+
+main_init();

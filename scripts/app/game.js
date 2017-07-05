@@ -1,7 +1,7 @@
-function app_game_init(
-    three
-  , dom
-  , mouse
+export default function (
+  three
+, dom
+, mouse
 ) {
   const jumping           = new app_mechanics_jumping();
   const movement          = new app_mechanics_movement();

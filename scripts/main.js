@@ -1,10 +1,11 @@
 ﻿import * as dom from './app/dom.js';
 import * as mouse from './app/mouse.js';
 import texture_loader from './app/texture_loader.js';
+import game_init from './app/game.js';
 
 function main_init() {
   const three = THREE;
-  const game = app_game_init(
+  const game = game_init(
     three
   , dom
   , mouse

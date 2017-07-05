@@ -1,4 +1,4 @@
-function app_mechanics_movement() {
+export default function () {
   this.state = {
     idle: 0,
     forward: 1,

@@ -1,4 +1,4 @@
-function app_mechanics_jumping() {
+export default function () {
   this.state = {
     idle: 0,
     riseUp: 1,

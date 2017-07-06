@@ -1,5 +1,5 @@
-import { DamageView, DamageItemView } from './view.js';
-import { DamageModel, DamageItemModel } from './model.js';
+import { DamageView, DamageItemView } from 'app/damage/view.js';
+import { DamageModel, DamageItemModel } from 'app/damage/model.js';
 
 export default class {
   create () {

@@ -1,5 +1,5 @@
-import * as jumping from '../mechanics/jumping.js';
-import * as movement from '../mechanics/movement.js';
+import * as jumping from 'app/mechanics/jumping.js';
+import * as movement from 'app/mechanics/movement.js';
 
 export default class {
   constructor () {

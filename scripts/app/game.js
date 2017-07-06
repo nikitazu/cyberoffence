@@ -1,10 +1,10 @@
-import * as three from '../lib/three.js-r84/build/three.min.js';
-import * as jumping from './mechanics/jumping.js';
-import * as movement from './mechanics/movement.js';
-import ArenaController from './arena/controller.js';
-import DamageController from './damage/controller.js';
-import FighterController from './fighter/controller.js';
-import HudController from './ui/hud/controller.js';
+import * as three from 'lib/three.js-r84/build/three.min.js';
+import * as jumping from 'app/mechanics/jumping.js';
+import * as movement from 'app/mechanics/movement.js';
+import ArenaController from 'app/arena/controller.js';
+import DamageController from 'app/damage/controller.js';
+import FighterController from 'app/fighter/controller.js';
+import HudController from 'app/ui/hud/controller.js';
 
 export default function (
   dom

@@ -1,4 +1,4 @@
-import * as three from '../../lib/three.js-r84/build/three.min.js';
+import * as three from 'lib/three.js-r84/build/three.min.js';
 
 export class DamageView {
   constructor (model) {

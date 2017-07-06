@@ -1,5 +1,5 @@
-import HudView from './view.js';
-import HudModel from './model.js';
+import HudView from 'app/ui/hud/view.js';
+import HudModel from 'app/ui/hud//model.js';
 
 export default class {
   create (camera, isFirst) {

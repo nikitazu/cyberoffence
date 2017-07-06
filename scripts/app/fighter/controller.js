@@ -1,7 +1,7 @@
-import * as jumping from '../mechanics/jumping.js';
-import * as movement from '../mechanics/movement.js';
-import FighterView from './view.js';
-import FighterModel from './model.js';
+import * as jumping from 'app/mechanics/jumping.js';
+import * as movement from 'app/mechanics/movement.js';
+import FighterView from 'app/fighter/view.js';
+import FighterModel from 'app/fighter/model.js';
 
 export default class {
   create (scene, textures, isFirst) {

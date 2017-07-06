@@ -1,5 +1,5 @@
-import ArenaView from './view.js';
-import ArenaModel from './model.js';
+import ArenaView from 'app/arena/view.js';
+import ArenaModel from 'app/arena/model.js';
 
 export default class {
   create (scene) {

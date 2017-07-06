@@ -1,8 +1,8 @@
-﻿import * as three from './lib/three.js-r84/build/three.min.js';
-import * as dom from './app/dom.js';
-import * as mouse from './app/mouse.js';
-import TextureLoader from './app/texture_loader.js';
-import game_init from './app/game.js';
+﻿import * as three from 'lib/three.js-r84/build/three.min.js';
+import * as dom from 'app/dom.js';
+import * as mouse from 'app/mouse.js';
+import TextureLoader from 'app/texture_loader.js';
+import game_init from 'app/game.js';
 
 function main_init() {
   const game = game_init(dom, mouse);

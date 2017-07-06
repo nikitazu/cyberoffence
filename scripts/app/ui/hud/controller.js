@@ -1,21 +1,19 @@
-function app_ui_hud_controller(
-  three
-) {
-  this.create = function (camera, isFirst) {
-    const hud = new app_ui_hud_view(
-      three
-    , new app_ui_hud_model()
-    );
+import HudView from './view.js';
+import HudModel from './model.js';
+
+export default class {
+  create (camera, isFirst) {
+    const hud = new HudView(new HudModel());
     camera.add(hud.sprite);
     hud.model.position.x = isFirst ? -.7 : .7;
     return hud;
   }
-  
-  this.update = function (model) {
+
+  update (model) {
     // todo
-  };
-  
-  this.render = function (view) {
+  }
+
+  render (view) {
     view.render();
-  };
+  }
 }

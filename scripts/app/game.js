@@ -4,21 +4,20 @@ import * as movement from './mechanics/movement.js';
 import ArenaController from './arena/controller.js';
 import DamageController from './damage/controller.js';
 import FighterController from './fighter/controller.js';
+import HudController from './ui/hud/controller.js';
 
 export default function (
   dom
 , mouse
 ) {
-  const arenaController  = new ArenaController();
-  const damageController = new DamageController();
+  const arenaController   = new ArenaController();
+  const damageController  = new DamageController();
   const fighterController = new FighterController();
+  const hudController     = new HudController();
 
-  // Heads-Up Display
-  const hudController     = new app_ui_hud_controller(three);
-  
   let cube;
   let sprite;
-  
+
   let hudA;
   let hudB;
   let arena;

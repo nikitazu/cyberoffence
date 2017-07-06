@@ -1,7 +1,6 @@
-export default function (
-  three
-, textures
-) {
+import * as three from '../lib/three.js-r84/build/three.min.js';
+
+export default function (textures) {
   const loader = new three.TextureLoader();
   const loadedTextures = {};
   let i = 0;

@@ -1,16 +1,16 @@
+import * as three from '../lib/three.js-r84/build/three.min.js';
 import Jumping from './mechanics/jumping.js';
 import Movement from './mechanics/movement.js';
 import ArenaController from './arena/controller.js';
 
 export default function (
-  three
-, dom
+  dom
 , mouse
 ) {
   const jumping   = new Jumping();
   const movement  = new Movement();
 
-  const arenaController   = new ArenaController(three);
+  const arenaController   = new ArenaController();
   const damageController  = new app_damage_controller(three);
   let fighterController;
 

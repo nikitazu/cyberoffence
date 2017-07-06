@@ -1,6 +1,7 @@
+import * as three from '../../lib/three.js-r84/build/three.min.js';
+
 export default class {
-  constructor (three, model) {
-    this.three = three;
+  constructor (model) {
     this.model = model;
     this.sprite = this._make_ground();
   }
@@ -15,9 +16,9 @@ export default class {
   }
 
   _make_ground () {
-    return new this.three.Mesh(
-      new this.three.PlaneGeometry(30, 10)
-    , new this.three.MeshBasicMaterial({ color: 0x302000 })
+    return new three.Mesh(
+      new three.PlaneGeometry(30, 10)
+    , new three.MeshBasicMaterial({ color: 0x302000 })
     );
   }
 }

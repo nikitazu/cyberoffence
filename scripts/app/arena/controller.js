@@ -2,15 +2,8 @@ import ArenaView from './view.js';
 import ArenaModel from './model.js';
 
 export default class {
-  constructor (three) {
-    this.three = three;
-  }
-
   create (scene) {
-    const arena = new ArenaView(
-      this.three
-    , new ArenaModel()
-    );
+    const arena = new ArenaView(new ArenaModel());
     scene.add(arena.sprite);
     arena.model.position.z = -7;
     arena.model.position.y = -5;

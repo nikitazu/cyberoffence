@@ -1,3 +1,4 @@
+import * as log from 'app/log.js';
 import * as jumping from 'app/mechanics/jumping.js';
 import * as movement from 'app/mechanics/movement.js';
 import FighterView from 'app/fighter/view.js';
@@ -33,7 +34,7 @@ export default class {
         if (!isMissed) {
           model.health -= d.value;
           d.isApplied = true;
-          console.log("hit! " + model.health);
+          log.debug("hit! " + model.health);
         }
       }
     });

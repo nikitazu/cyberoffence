@@ -101,8 +101,6 @@
     gl_FragColor  = texture2D(texture, uv) * kl;
   }
   </script>
-
-  <script src="assets/bundle.js"></script>
   
   <!-- 
   
@@ -120,5 +118,31 @@
   't'	        = sampler2D   = THREE.Texture
   't'	        = samplerCube = THREE.CubeTexture
   -->
+  <section id="logger">
+    <div>logger ready.</div>
+  </section>
+  <style type="text/css">
+    #logger {
+      position: absolute;
+      padding: 10px;
+      background: #000000;
+      opacity: 0.4;
+      font-family: monospace;
+    }
+    #logger > .log-type-debug {
+      color: #00CC00;
+    }
+    #logger > .log-type-info {
+      color: #00AAAA;
+    }
+    #logger > .log-type-warn {
+      color: #FFAA00;
+    }
+    #logger > .log-type-error {
+      color: #FF7700;
+    }
+  </style>
+
+  <script src="assets/bundle.js"></script>
 </body>
 </html>

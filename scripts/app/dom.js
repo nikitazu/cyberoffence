@@ -10,6 +10,9 @@ export const getWindowInnerHeight = () =>
 export const documentAppend = element =>
   document.body.appendChild(element);
 
+export const getElementById = id =>
+  document.getElementById(id);
+
 export const getCodeById = id =>
   document.getElementById(id).innerHTML;
 

@@ -1,4 +1,5 @@
 import * as three from 'lib/three.js-r84/build/three.min.js';
+import * as log from 'app/log.js';
 
 export default function (textures) {
   const loader = new three.TextureLoader();
@@ -7,7 +8,7 @@ export default function (textures) {
 
   const promise = new Promise((resolve, reject) => {
     function onLoadDone(texture) {
-      console.log("txld loaded: " + textures[i]);
+      log.debug("txld loaded: " + textures[i]);
       loadedTextures[textures[i]] = texture;
       i += 1;
       if (i < textures.length) {
@@ -18,7 +19,7 @@ export default function (textures) {
     }
   
     function onLoadFailed(xhr) {
-      console.log("txld load failed: " + game.textures[i]);
+      log.debug("txld load failed: " + game.textures[i]);
       reject();
     }
     
@@ -30,9 +31,9 @@ export default function (textures) {
   };
 
   function load_texture(url, onDone, onError) {
-    console.log("txld load: " + url);
+    log.debug("txld load: " + url);
     const progress = xhr =>
-      console.log("txld: " + (xhr.loaded / xhr.total * 100) + "%");
+      log.debug("txld: " + (xhr.loaded / xhr.total * 100) + "%");
     loader.load(url, onDone, progress, onError);
   }
 }

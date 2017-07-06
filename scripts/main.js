@@ -1,10 +1,12 @@
 ﻿import * as three from 'lib/three.js-r84/build/three.min.js';
 import * as dom from 'app/dom.js';
+import * as log from 'app/log.js';
 import * as mouse from 'app/mouse.js';
 import TextureLoader from 'app/texture_loader.js';
 import game_init from 'app/game.js';
 
 function main_init() {
+  log.debug('main init');
   const game = game_init(dom, mouse);
 
   let scene;
@@ -14,12 +16,17 @@ function main_init() {
   const textureLoader = new TextureLoader(game.textures);
   textureLoader.handleLoad(
     textures => {
-      scene_setup();
-      game.start(scene, camera, textures);
-      render();
+      try
+      {
+        scene_setup();
+        game.start(scene, camera, textures);
+        render();
+      } catch (e) {
+        log.error("ERROR:", "startup", e);
+      }
     },
     () => {
-      console.log("load failure");
+      log.error("load failure");
     }
   );
 
@@ -48,6 +55,12 @@ function main_init() {
     requestAnimationFrame( render );
     renderer.render( scene, camera );
   }
+  log.debug('main init done');
 }
 
-main_init();
+try
+{
+  main_init();
+} catch (e) {
+  log.error("ERROR:", "main_init", e);
+}

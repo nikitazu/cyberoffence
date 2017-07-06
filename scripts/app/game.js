@@ -1,4 +1,5 @@
 import * as three from 'lib/three.js-r84/build/three.min.js';
+import * as log from 'app/log.js';
 import * as jumping from 'app/mechanics/jumping.js';
 import * as movement from 'app/mechanics/movement.js';
 import * as keyboard from 'app/keyboard.js';
@@ -33,6 +34,7 @@ export default function (
   let uniforms;
 
   function start(scene, camera, textures) {
+    log.debug("game start");
     uniforms = {
       resolution : {
         type  : 'v2'
@@ -151,7 +153,7 @@ export default function (
         break;
 
       default:
-        console.log("KEY " + event.which);
+        log.debug("KEY " + event.which);
       }
     });
 	}

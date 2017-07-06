@@ -1,5 +1,6 @@
 import Jumping from './mechanics/jumping.js';
 import Movement from './mechanics/movement.js';
+import ArenaController from './arena/controller.js';
 
 export default function (
   three
@@ -9,7 +10,7 @@ export default function (
   const jumping   = new Jumping();
   const movement  = new Movement();
 
-  const arenaController   = new app_arena_controller(three);
+  const arenaController   = new ArenaController(three);
   const damageController  = new app_damage_controller(three);
   let fighterController;
 

@@ -1,23 +1,28 @@
-function app_arena_controller(
-  three
-) {
-  this.create = function (scene) {
-    const arena = new app_arena_view(
-      three
-    , new app_arena_model()
+import ArenaView from './view.js';
+import ArenaModel from './model.js';
+
+export default class {
+  constructor (three) {
+    this.three = three;
+  }
+
+  create (scene) {
+    const arena = new ArenaView(
+      this.three
+    , new ArenaModel()
     );
     scene.add(arena.sprite);
     arena.model.position.z = -7;
     arena.model.position.y = -5;
     arena.model.rotation.x = 3/2*Math.PI;
     return arena;
-  };
+  }
 
-  this.update = function (model) {
+  update (model) {
     // todo
-  };
-  
-  this.render = function (view) {
+  }
+
+  render (view) {
     view.render();
-  };
+  }
 }

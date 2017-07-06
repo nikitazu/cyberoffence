@@ -1,54 +1,50 @@
-export default class {
-  constructor() {
-    this.state = {
-      idle: 0,
-      forward: 1,
-      backward: 2
-    };
+export const State = {
+  idle: 0
+, forward: 1
+, backward: 2
+};
 
-    this.key = {
-      forward: 0,
-      backward: 1
-    };
-  }
+export const Key = {
+  forward: 0
+, backward: 1
+};
 
-  move (state, key, isKeyDown) {
-    switch (state) {
-    case this.state.idle:
-      if (key === this.key.forward && isKeyDown) {
-        return this.state.forward;
-      } else if (key === this.key.backward && isKeyDown) {
-        return this.state.backward;
-      } else {
-        return state;
-      }
-    case this.state.forward:
-      if (key === this.key.forward && !isKeyDown) {
-        return this.state.idle;
-      } else if (key === this.key.backward && isKeyDown) {
-        return this.state.backward;
-      } else {
-        return state;
-      }
-    case this.state.backward:
-      if (key === this.key.backward && !isKeyDown) {
-        return this.state.idle;
-      } else if (key === this.key.forward && isKeyDown) {
-        return this.state.forward;
-      } else {
-        return state;
-      }
-    default:
-      throw "Unknown state " + state;
+export function move (state, key, isKeyDown) {
+  switch (state) {
+  case State.idle:
+    if (key === Key.forward && isKeyDown) {
+      return State.forward;
+    } else if (key === Key.backward && isKeyDown) {
+      return State.backward;
+    } else {
+      return state;
     }
-  }
-
-  stateToSpeed (state) {
-    switch (state) {
-    case this.state.idle: return 0;
-    case this.state.forward: return 1;
-    case this.state.backward: return -1;
-    default: throw "Unknown state " + state;
+  case State.forward:
+    if (key === Key.forward && !isKeyDown) {
+      return State.idle;
+    } else if (key === Key.backward && isKeyDown) {
+      return State.backward;
+    } else {
+      return state;
     }
+  case State.backward:
+    if (key === Key.backward && !isKeyDown) {
+      return State.idle;
+    } else if (key === Key.forward && isKeyDown) {
+      return State.forward;
+    } else {
+      return state;
+    }
+  default:
+    throw "Unknown state " + state;
+  }
+}
+
+export function stateToSpeed (state) {
+  switch (state) {
+  case State.idle: return 0;
+  case State.forward: return 1;
+  case State.backward: return -1;
+  default: throw "Unknown state " + state;
   }
 }

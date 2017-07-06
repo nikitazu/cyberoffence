@@ -1,19 +1,17 @@
 import * as three from '../lib/three.js-r84/build/three.min.js';
-import Jumping from './mechanics/jumping.js';
-import Movement from './mechanics/movement.js';
+import * as jumping from './mechanics/jumping.js';
+import * as movement from './mechanics/movement.js';
 import ArenaController from './arena/controller.js';
 import DamageController from './damage/controller.js';
+import FighterController from './fighter/controller.js';
 
 export default function (
   dom
 , mouse
 ) {
-  const jumping   = new Jumping();
-  const movement  = new Movement();
-
   const arenaController  = new ArenaController();
   const damageController = new DamageController();
-  let fighterController;
+  const fighterController = new FighterController();
 
   // Heads-Up Display
   const hudController     = new app_ui_hud_controller(three);
@@ -32,13 +30,6 @@ export default function (
   let uniforms;
 
   function start(scene, camera, textures) {
-    fighterController = new app_fighter_controller(
-      three
-    , jumping
-    , movement
-    , textures
-    );
-
     uniforms = {
       resolution : {
         type  : 'v2'
@@ -71,8 +62,8 @@ export default function (
     arena = arenaController.create(scene);
     damageA = damageController.create();
     damageB = damageController.create();
-    fighterA = fighterController.create(scene, true);
-    fighterB = fighterController.create(scene, false);
+    fighterA = fighterController.create(scene, textures, true);
+    fighterB = fighterController.create(scene, textures, false);
 
     scene.add(cube);
     scene.add(sprite);
@@ -112,14 +103,14 @@ export default function (
       case key.a:
         fighterA.model.movementState = movement.move(
           fighterA.model.movementState
-        , movement.key.backward
+        , movement.Key.backward
         , isKeyDown
         );
         break;
       case key.d:
         fighterA.model.movementState = movement.move(
           fighterA.model.movementState
-        , movement.key.forward
+        , movement.Key.forward
         , isKeyDown
         );
         break;
@@ -129,7 +120,7 @@ export default function (
       case key.w:
         fighterA.model.jumpingState = jumping.jump(
           fighterA.model.jumpingState
-        , jumping.key.jump
+        , jumping.Key.jump
         , isKeyDown
         );
         break;
@@ -142,14 +133,14 @@ export default function (
       case key.left:
         fighterB.model.movementState = movement.move(
           fighterB.model.movementState
-        , movement.key.backward
+        , movement.Key.backward
         , isKeyDown
         );
         break;
       case key.right:
         fighterB.model.movementState = movement.move(
           fighterB.model.movementState
-        , movement.key.forward
+        , movement.Key.forward
         , isKeyDown
         );
         break;
@@ -159,7 +150,7 @@ export default function (
       case key.up:
         fighterB.model.jumpingState = jumping.jump(
           fighterB.model.jumpingState
-        , jumping.key.jump
+        , jumping.Key.jump
         , isKeyDown
         );
         break;

@@ -47,7 +47,7 @@ export default function (
       }
     , texture : {
         type  : 't'
-      , value : textures["images/morevna512.png"]
+      , value : textures["images/bg_park_01.jpg"]
       }
     , light : {
         type  : 'v3'
@@ -214,7 +214,7 @@ export default function (
 
   function make_shaded_sprite(shader, uniforms) {
     return new three.Mesh(
-      new three.PlaneGeometry(50, 50),
+      new three.PlaneGeometry(100, 100),
       new three.ShaderMaterial({
         fragmentShader: shader
       , uniforms: uniforms
@@ -226,8 +226,8 @@ export default function (
 	  start     : start
   , render    : render
   , textures  : [
-      "images/morevna512.png"
-    , "images/dummy_stand_01.png"
+      "images/dummy_stand_01.png"
+    , "images/bg_park_01.jpg"
     ]
 	};
 }

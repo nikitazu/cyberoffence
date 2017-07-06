@@ -5,6 +5,7 @@ import * as keyboard from 'app/keyboard.js';
 import ArenaController from 'app/arena/controller.js';
 import DamageController from 'app/damage/controller.js';
 import FighterController from 'app/fighter/controller.js';
+import CameraController from 'app/ui/camera/controller.js';
 import HudController from 'app/ui/hud/controller.js';
 
 export default function (
@@ -14,11 +15,13 @@ export default function (
   const arenaController   = new ArenaController();
   const damageController  = new DamageController();
   const fighterController = new FighterController();
+  const cameraController  = new CameraController();
   const hudController     = new HudController();
 
   let cube;
   let sprite;
 
+  let cam;
   let hudA;
   let hudB;
   let arena;
@@ -56,7 +59,8 @@ export default function (
 
     cube = make_cube();
     sprite = make_shaded_sprite(fragShader, uniforms);
-    
+
+    cam = cameraController.create(camera);
     hudA = hudController.create(camera, true);
     hudB = hudController.create(camera, false)
     arena = arenaController.create(scene);
@@ -161,12 +165,18 @@ export default function (
     damageController.update(damageB.model);
     fighterController.update(fighterA.model, damageB.model);
     fighterController.update(fighterB.model, damageA.model);
+    cameraController.update(
+      cam.model
+    , fighterA.model.position
+    , fighterB.model.position
+    );
 
     // cleanUp
     damageController.cleanUp(scene, damageA);
     damageController.cleanUp(scene, damageB);
 
     // render
+    cameraController.render(cam);
     hudController.render(hudA);
     hudController.render(hudB);
     arenaController.render(arena);
@@ -174,22 +184,6 @@ export default function (
     damageController.render(damageB);
     fighterController.render(fighterA);
     fighterController.render(fighterB);
-
-    // camera
-    camera.position.x = (
-      fighterA.sprite.position.x
-    + fighterB.sprite.position.x
-    ) / 2;
-
-    const deltaX = Math.abs(
-      fighterA.sprite.position.x - fighterB.sprite.position.x
-    );
-    const deltaY = Math.abs(
-      fighterA.sprite.position.y - fighterB.sprite.position.y
-    );
-
-    camera.position.z = deltaX / 10;
-    camera.position.y = deltaY / 5;
 
     cube.rotation.x += 0.02;
     uniforms.resolution.value.x = dom.getWindowInnerWidth();

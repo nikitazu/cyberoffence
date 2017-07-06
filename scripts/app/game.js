@@ -1,6 +1,7 @@
 import * as three from 'lib/three.js-r84/build/three.min.js';
 import * as jumping from 'app/mechanics/jumping.js';
 import * as movement from 'app/mechanics/movement.js';
+import * as keyboard from 'app/keyboard.js';
 import ArenaController from 'app/arena/controller.js';
 import DamageController from 'app/damage/controller.js';
 import FighterController from 'app/fighter/controller.js';
@@ -82,78 +83,64 @@ export default function (
       //camera.rotation.x -= (dy * mouseSpeed);
     });
 
-    const key = {
-      a: 65,
-      d: 68,
-      s: 83,
-      w: 87,
-      f: 70,
-      
-      left: 37,
-      up: 38,
-      right: 39,
-      down: 40,
-      n0: 48
-    };
-
     dom.setOnKey((event, isKeyDown) => {
       switch (event.which) {
 
-      case key.a:
+      case keyboard.Key.a:
         fighterA.model.movementState = movement.move(
           fighterA.model.movementState
         , movement.Key.backward
         , isKeyDown
         );
         break;
-      case key.d:
+      case keyboard.Key.d:
         fighterA.model.movementState = movement.move(
           fighterA.model.movementState
         , movement.Key.forward
         , isKeyDown
         );
         break;
-      case key.s:
+      case keyboard.Key.s:
         // todo crouch
         break;
-      case key.w:
+      case keyboard.Key.w:
         fighterA.model.jumpingState = jumping.jump(
           fighterA.model.jumpingState
         , jumping.Key.jump
         , isKeyDown
         );
         break;
-      case key.f:
+      case keyboard.Key.f:
         if (isKeyDown) {
           damageController.createItem(scene, damageA, fighterA);
         }
         break;
 
-      case key.left:
+      case keyboard.Key.left:
         fighterB.model.movementState = movement.move(
           fighterB.model.movementState
         , movement.Key.backward
         , isKeyDown
         );
         break;
-      case key.right:
+      case keyboard.Key.right:
         fighterB.model.movementState = movement.move(
           fighterB.model.movementState
         , movement.Key.forward
         , isKeyDown
         );
         break;
-      case key.down:
+      case keyboard.Key.down:
         // todo crouch
         break;
-      case key.up:
+      case keyboard.Key.up:
         fighterB.model.jumpingState = jumping.jump(
           fighterB.model.jumpingState
         , jumping.Key.jump
         , isKeyDown
         );
         break;
-      case key.n0:
+      case keyboard.Key.n0:
         if (isKeyDown) {
           damageController.createItem(scene, damageB, fighterB);
         }

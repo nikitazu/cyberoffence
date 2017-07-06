@@ -1,26 +1,26 @@
-function app_damage_view(
-    three
-  , model
-) {
-  this.model = model;
-  this.items = [];
+import * as three from '../../lib/three.js-r84/build/three.min.js';
 
-  this.render = function () {
+export class DamageView {
+  constructor (model) {
+    this.model = model;
+    this.items = [];
+  }
+
+  render () {
     this.items.forEach(x => x.render());
-  };
+  }
 }
 
-function app_damage_view_item(
-    three
-  , model
-) {
-  this.model = model;
-  this.sprite = new three.Mesh(
-    new three.PlaneGeometry(1, 1)
-  , new three.MeshBasicMaterial({ color: 0x101000 })
-  );
+export class DamageItemView {
+  constructor (model) {
+    this.model = model;
+    this.sprite = new three.Mesh(
+      new three.PlaneGeometry(1, 1)
+      , new three.MeshBasicMaterial({ color: 0x101000 })
+    );
+  }
 
-  this.render = function () {
+  render () {
     const deltaY = -1;
     const deltaZ = -10;
     
@@ -35,5 +35,5 @@ function app_damage_view_item(
     } else if (this.model.frameIndex > 24) {
       this.sprite.material.color.setHex(0xffffff);
     }
-  };
+  }
 }

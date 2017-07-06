@@ -18,7 +18,7 @@ export default class {
   }
 
   render () {
-    const deltaY = -1;
+    const deltaY = -3;
     const deltaZ = -10;
     this.sprite.position.x = this.model.position.x;
     this.sprite.position.y = this.model.position.y + deltaY;

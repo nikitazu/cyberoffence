@@ -1,5 +1,4 @@
-const path    = require('path');
-const webpack = require('webpack');
+const path   = require('path');
 
 const config = {
 	context: path.join(__dirname, 'scripts'),
@@ -16,7 +15,4 @@ const config = {
   }
 };
 
-const compiler = webpack(config);
-compiler.run(function (err, stats) {
-	console.log(stats.toJson());
-});
+module.exports = config;

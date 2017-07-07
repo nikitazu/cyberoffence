@@ -14,7 +14,7 @@
 * glsl
 
 # Build
-node build
+node run build
 
 # Run
 node server

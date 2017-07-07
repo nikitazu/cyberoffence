@@ -1,4 +1,4 @@
-﻿import * as three from 'lib/three.js-r84/build/three.min.js';
+﻿import * as three from 'three';
 import * as dom from 'app/dom.js';
 import * as log from 'app/log.js';
 import * as mouse from 'app/mouse.js';

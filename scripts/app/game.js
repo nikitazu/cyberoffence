@@ -1,4 +1,4 @@
-import * as three from 'lib/three.js-r84/build/three.min.js';
+import * as three from 'three';
 import * as log from 'app/log.js';
 import * as jumping from 'app/mechanics/jumping.js';
 import * as movement from 'app/mechanics/movement.js';

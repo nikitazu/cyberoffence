@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "finalhandler": "^1.0.3",
-    "serve-static": "^1.12.3"
+    "serve-static": "^1.12.3",
+    "three": "^0.86.0"
   },
   "devDependencies": {
     "webpack": "^3.0.0"

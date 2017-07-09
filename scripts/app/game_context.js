@@ -4,6 +4,12 @@ export default class {
     this.camera   = this._get(values, 'camera');
     this.scene    = this._get(values, 'scene');
     this.textures = this._get(values, 'textures');
+
+    this.timePassedMs = 0;
+  }
+
+  update() {
+    this.timePassedMs = this.clock.getDelta() * 1000;
   }
 
   _get(values, key) {

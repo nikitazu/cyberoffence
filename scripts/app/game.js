@@ -72,9 +72,9 @@ export default function (
     arena = arenaController.create(gameContext.scene);
     damageA = damageController.create();
     damageB = damageController.create();
-    fighterA = fighterController.create(gameContext.scene, gameContext.textures, true);
-    fighterB = fighterController.create(gameContext.scene, gameContext.textures, false);
-    counter = counterController.create(gameContext.scene, gameContext.textures);
+    fighterA = fighterController.create(gameContext, true);
+    fighterB = fighterController.create(gameContext, false);
+    counter = counterController.create(gameContext);
 
     gameContext.scene.add(cube);
     gameContext.scene.add(sprite);
@@ -164,8 +164,7 @@ export default function (
 	}
 
 	function render(gameContext) {
-    const timePassedMs = gameContext.clock.getDelta() * 1000;
-
+    gameContext.update();
     // update
     try
     {
@@ -208,7 +207,7 @@ export default function (
       damageController.render(damageB);
       fighterController.render(fighterA);
       fighterController.render(fighterB);
-      counterController.render(counter, timePassedMs);
+      counterController.render(counter, gameContext);
     } catch (e) {
       log.error(`game.render (render) error: ${e}`);
       throw e;

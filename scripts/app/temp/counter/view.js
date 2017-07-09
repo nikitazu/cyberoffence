@@ -2,11 +2,11 @@ import * as three from 'three';
 import TextureAnimator from 'app/utils/three/texture_animator.js';
 
 export default class {
-  constructor (model, textures) {
+  constructor (model, gameContext) {
     this.model = model;
     
     const material = new three.MeshBasicMaterial({
-      map: textures["images/counter_ss.png"]
+      map: gameContext.textures["images/counter_ss.png"]
     , color: 0xffffff
     });
 
@@ -16,7 +16,7 @@ export default class {
     );
 
     this.animator = new TextureAnimator(
-      textures["images/counter_ss.png"]
+      gameContext.textures["images/counter_ss.png"]
     , { frameCountX: 4
       , frameCountY: 4
       , startIndex: this.model.animation.start
@@ -26,12 +26,12 @@ export default class {
     );
   }
 
-  render (timePassedMs) {
+  render (gameContext) {
     const deltaY = 0;
     const deltaZ = 0;
     this.sprite.position.x = this.model.position.x;
     this.sprite.position.y = this.model.position.y + deltaY;
     this.sprite.position.z = this.model.position.z + deltaZ;
-    this.animator.update(timePassedMs);
+    this.animator.update(gameContext.timePassedMs);
   }
 }

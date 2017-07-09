@@ -6,9 +6,9 @@ import FighterView from 'app/fighter/view.js';
 import FighterModel from 'app/fighter/model.js';
 
 export default class {
-  create (scene, textures, isFirst) {
-    const fighter = new FighterView(new FighterModel(), textures);
-    scene.add(fighter.sprite);
+  create (gameContext, isFirst) {
+    const fighter = new FighterView(new FighterModel(), gameContext);
+    gameContext.scene.add(fighter.sprite);
     fighter.model.position.x = isFirst ? -5 : 5;
     return fighter;
   }

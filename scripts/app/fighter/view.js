@@ -1,11 +1,11 @@
 import * as three from 'three';
 
 export default class {
-  constructor (model, textures) {
+  constructor (model, gameContext) {
     this.model = model;
 
     const material = new three.MeshBasicMaterial({
-      map: textures["images/dummy_stand_01.png"]
+      map: gameContext.textures["images/dummy_stand_01.png"]
     , color: 0xffffff
     });
 

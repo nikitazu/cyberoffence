@@ -12,7 +12,7 @@ export default class {
     material.transparent = true;
 
     this.sprite = new three.Mesh(
-      new three.PlaneGeometry(7, 7)
+      new three.PlaneGeometry(this.model.size.w, this.model.size.h)
     , material
     );
   }

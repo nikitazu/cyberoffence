@@ -10,6 +10,7 @@ export class DamageItemModel {
     this.value = 10;
     this.isApplied = false;
     this.position = { x: 0, y: 0, z: 0 };
+    this.size = { w: 1, h: 1 };
     this.frameIndex = 0;
     this.frameCount = 100;
   }

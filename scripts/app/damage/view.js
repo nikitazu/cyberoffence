@@ -15,7 +15,7 @@ export class DamageItemView {
   constructor (model) {
     this.model = model;
     this.sprite = new three.Mesh(
-      new three.PlaneGeometry(1, 1)
+      new three.PlaneGeometry(this.model.size.w, this.model.size.h)
       , new three.MeshBasicMaterial({ color: 0x101000 })
     );
   }

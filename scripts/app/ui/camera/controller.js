@@ -2,8 +2,12 @@ import CameraView from 'app/ui/camera/view.js';
 import CameraModel from 'app/ui/camera//model.js';
 
 export default class {
-  create (camera) {
-    return new CameraView(camera, new CameraModel());
+  constructor(gameContext) {
+    this.gameContext = gameContext;
+  }
+
+  create () {
+    return new CameraView(this.gameContext.camera, new CameraModel());
   }
 
   update (model, posA, posB) {

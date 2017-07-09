@@ -14,12 +14,12 @@ export default function (
   dom
 , mouse
 ) {
-  const arenaController   = new ArenaController();
-  const damageController  = new DamageController();
-  const fighterController = new FighterController();
-  const counterController = new CounterController();
-  const cameraController  = new CameraController();
-  const hudController     = new HudController();
+  let arenaController;
+  let damageController;
+  let fighterController;
+  let counterController;
+  let cameraController;
+  let hudController;
 
   let cube;
   let sprite;
@@ -39,6 +39,13 @@ export default function (
 
   function start(gameContext) {
     log.debug("game start");
+    arenaController   = new ArenaController(gameContext);
+    damageController  = new DamageController(gameContext);
+    fighterController = new FighterController(gameContext);
+    counterController = new CounterController(gameContext);
+    cameraController  = new CameraController(gameContext);
+    hudController     = new HudController(gameContext);
+
     uniforms = {
       resolution : {
         type  : 'v2'
@@ -66,15 +73,15 @@ export default function (
     cube = make_cube();
     sprite = make_shaded_sprite(fragShader, uniforms);
 
-    cam = cameraController.create(gameContext.camera);
-    hudA = hudController.create(gameContext.camera, true);
-    hudB = hudController.create(gameContext.camera, false)
-    arena = arenaController.create(gameContext.scene);
+    cam = cameraController.create();
+    hudA = hudController.create(true);
+    hudB = hudController.create(false);
+    arena = arenaController.create();
     damageA = damageController.create();
     damageB = damageController.create();
-    fighterA = fighterController.create(gameContext, true);
-    fighterB = fighterController.create(gameContext, false);
-    counter = counterController.create(gameContext);
+    fighterA = fighterController.create(true);
+    fighterB = fighterController.create(false);
+    counter = counterController.create();
 
     gameContext.scene.add(cube);
     gameContext.scene.add(sprite);
@@ -123,7 +130,7 @@ export default function (
         break;
       case keyboard.Key.f:
         if (isKeyDown) {
-          damageController.createItem(gameContext.scene, damageA, fighterA);
+          damageController.createItem(damageA, fighterA);
         }
         break;
 
@@ -153,7 +160,7 @@ export default function (
         break;
       case keyboard.Key.n0:
         if (isKeyDown) {
-          damageController.createItem(gameContext.scene, damageB, fighterB);
+          damageController.createItem(damageB, fighterB);
         }
         break;
 
@@ -189,8 +196,8 @@ export default function (
     // cleanUp
     try
     {
-      damageController.cleanUp(gameContext.scene, damageA);
-      damageController.cleanUp(gameContext.scene, damageB);
+      damageController.cleanUp(damageA);
+      damageController.cleanUp(damageB);
     } catch (e) {
       log.error(`game.render (cleanUp) error: ${e}`);
       throw e;
@@ -207,7 +214,7 @@ export default function (
       damageController.render(damageB);
       fighterController.render(fighterA);
       fighterController.render(fighterB);
-      counterController.render(counter, gameContext);
+      counterController.render(counter);
     } catch (e) {
       log.error(`game.render (render) error: ${e}`);
       throw e;

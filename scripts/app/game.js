@@ -160,32 +160,50 @@ export default function (
 
 	function render(scene, camera) {
     // update
-    hudController.update(hudA.model);
-    hudController.update(hudB.model);
-    arenaController.update(arena.model);
-    damageController.update(damageA.model);
-    damageController.update(damageB.model);
-    fighterController.update(fighterA.model, damageB.model);
-    fighterController.update(fighterB.model, damageA.model);
-    cameraController.update(
-      cam.model
-    , fighterA.model.position
-    , fighterB.model.position
-    );
+    try
+    {
+      hudController.update(hudA.model);
+      hudController.update(hudB.model);
+      arenaController.update(arena.model);
+      damageController.update(damageA.model);
+      damageController.update(damageB.model);
+      fighterController.update(fighterA.model, damageB.model);
+      fighterController.update(fighterB.model, damageA.model);
+      cameraController.update(
+        cam.model
+      , fighterA.model.position
+      , fighterB.model.position
+      );
+    } catch (e) {
+      log.error(`game.render (update) error: ${e}`);
+      throw e;
+    }
 
     // cleanUp
-    damageController.cleanUp(scene, damageA);
-    damageController.cleanUp(scene, damageB);
+    try
+    {
+      damageController.cleanUp(scene, damageA);
+      damageController.cleanUp(scene, damageB);
+    } catch (e) {
+      log.error(`game.render (cleanUp) error: ${e}`);
+      throw e;
+    }
 
     // render
-    cameraController.render(cam);
-    hudController.render(hudA);
-    hudController.render(hudB);
-    arenaController.render(arena);
-    damageController.render(damageA);
-    damageController.render(damageB);
-    fighterController.render(fighterA);
-    fighterController.render(fighterB);
+    try
+    {
+      cameraController.render(cam);
+      hudController.render(hudA);
+      hudController.render(hudB);
+      arenaController.render(arena);
+      damageController.render(damageA);
+      damageController.render(damageB);
+      fighterController.render(fighterA);
+      fighterController.render(fighterB);
+    } catch (e) {
+      log.error(`game.render (render) error: ${e}`);
+      throw e;
+    }
 
     cube.rotation.x += 0.02;
     uniforms.resolution.value.x = dom.getWindowInnerWidth();

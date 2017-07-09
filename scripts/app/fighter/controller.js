@@ -1,4 +1,5 @@
 import * as log from 'app/log.js';
+import * as damaging from 'app/mechanics/damaging.js';
 import * as jumping from 'app/mechanics/jumping.js';
 import * as movement from 'app/mechanics/movement.js';
 import FighterView from 'app/fighter/view.js';
@@ -14,28 +15,10 @@ export default class {
 
   update (model, damage) {
     damage.items.forEach(d => {
-      if (!d.isApplied && d.isDamagingFrame()) {
-        const x1 = d.position.x;
-        const y1 = d.position.y;
-        const w1 = 1;
-        const h1 = 1;
-
-        const x2 = model.position.x;
-        const y2 = model.position.y;
-        const w2 = 3;
-        const h2 = 7;
-
-        const isMissed =
-           (x1 + w1 < x2)
-        || (x2 + w2 < x1)
-        || (y1 + h1 < y2)
-        || (y2 + h2 < y1);
-
-        if (!isMissed) {
-          model.health -= d.value;
-          d.isApplied = true;
-          log.debug("hit! " + model.health);
-        }
+      if (damaging.isHit(model, d)) {
+        model.health -= d.value;
+        d.isApplied = true;
+        log.debug("hit! " + model.health);
       }
     });
 

@@ -2,7 +2,7 @@ import * as geometry from 'app/mechanics/geometry.js';
 
 export function isHit(fighter, damage) {
   return !damage.isApplied
-    && damage.isDamagingFrame()
+    && damage.isDamagingFrame
     && geometry.rectangleIntersects(
       damage.position.x
     , damage.position.y

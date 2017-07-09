@@ -15,7 +15,7 @@ export class DamageItemModel {
     this.frameCount = 100;
   }
 
-  isDamagingFrame () {
+  get isDamagingFrame () {
     return this.frameIndex > 24 && this.frameIndex < 90;
   }
 }

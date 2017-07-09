@@ -37,7 +37,7 @@ export default function (
   
   let counter;
 
-  function start(clock, scene, camera, textures) {
+  function start(gameContext) {
     log.debug("game start");
     uniforms = {
       resolution : {
@@ -53,7 +53,7 @@ export default function (
       }
     , texture : {
         type  : 't'
-      , value : textures["images/bg_park_01.jpg"]
+      , value : gameContext.textures["images/bg_park_01.jpg"]
       }
     , light : {
         type  : 'v3'
@@ -66,18 +66,18 @@ export default function (
     cube = make_cube();
     sprite = make_shaded_sprite(fragShader, uniforms);
 
-    cam = cameraController.create(camera);
-    hudA = hudController.create(camera, true);
-    hudB = hudController.create(camera, false)
-    arena = arenaController.create(scene);
+    cam = cameraController.create(gameContext.camera);
+    hudA = hudController.create(gameContext.camera, true);
+    hudB = hudController.create(gameContext.camera, false)
+    arena = arenaController.create(gameContext.scene);
     damageA = damageController.create();
     damageB = damageController.create();
-    fighterA = fighterController.create(scene, textures, true);
-    fighterB = fighterController.create(scene, textures, false);
-    counter = counterController.create(scene, textures);
+    fighterA = fighterController.create(gameContext.scene, gameContext.textures, true);
+    fighterB = fighterController.create(gameContext.scene, gameContext.textures, false);
+    counter = counterController.create(gameContext.scene, gameContext.textures);
 
-    scene.add(cube);
-    scene.add(sprite);
+    gameContext.scene.add(cube);
+    gameContext.scene.add(sprite);
     
     cube.position.z = -3;
     sprite.position.z = -20;
@@ -123,7 +123,7 @@ export default function (
         break;
       case keyboard.Key.f:
         if (isKeyDown) {
-          damageController.createItem(scene, damageA, fighterA);
+          damageController.createItem(gameContext.scene, damageA, fighterA);
         }
         break;
 
@@ -153,7 +153,7 @@ export default function (
         break;
       case keyboard.Key.n0:
         if (isKeyDown) {
-          damageController.createItem(scene, damageB, fighterB);
+          damageController.createItem(gameContext.scene, damageB, fighterB);
         }
         break;
 
@@ -163,8 +163,8 @@ export default function (
     });
 	}
 
-	function render(clock, scene, camera) {
-    const timePassedMs = clock.getDelta() * 1000;
+	function render(gameContext) {
+    const timePassedMs = gameContext.clock.getDelta() * 1000;
 
     // update
     try
@@ -190,8 +190,8 @@ export default function (
     // cleanUp
     try
     {
-      damageController.cleanUp(scene, damageA);
-      damageController.cleanUp(scene, damageB);
+      damageController.cleanUp(gameContext.scene, damageA);
+      damageController.cleanUp(gameContext.scene, damageB);
     } catch (e) {
       log.error(`game.render (cleanUp) error: ${e}`);
       throw e;
@@ -222,14 +222,14 @@ export default function (
     uniforms.light.value.x = (
       uniforms.resolution.value.x/2
       + uniforms.resolution.value.x
-      * camera.position.x
+      * gameContext.camera.position.x
       / 50
     );
 
     uniforms.light.value.y = (
       uniforms.resolution.value.y/2
       + uniforms.resolution.value.y 
-      * -camera.position.y
+      * -gameContext.camera.position.y
       / 2
     );
 	};

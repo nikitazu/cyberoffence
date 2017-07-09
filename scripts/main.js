@@ -3,12 +3,14 @@ import * as dom from 'app/dom.js';
 import * as log from 'app/log.js';
 import * as mouse from 'app/mouse.js';
 import TextureLoader from 'app/texture_loader.js';
+import GameContext from 'app/game_context.js';
 import game_init from 'app/game.js';
 
 function main_init() {
   log.debug('main init');
   const game = game_init(dom, mouse);
 
+  let gameContext;
   let clock;
   let scene;
   let camera;
@@ -20,7 +22,13 @@ function main_init() {
       try
       {
         scene_setup();
-        game.start(clock, scene, camera, textures);
+        gameContext = new GameContext({
+          clock: clock
+        , scene: scene
+        , camera: camera
+        , textures: textures
+        });
+        game.start(gameContext);
         render();
       } catch (e) {
         log.error("ERROR:", "startup", e);
@@ -53,7 +61,7 @@ function main_init() {
   }
 
   function render() {
-    game.render(clock, scene, camera);
+    game.render(gameContext);
     requestAnimationFrame(render);
     renderer.render(scene, camera);
   }

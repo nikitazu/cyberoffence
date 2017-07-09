@@ -16,12 +16,18 @@ const putMessage = (type, ...args) => {
   } else {
     logger.innerHTML += message;
   }
-}
+};
+
+const prettyStackTrace = stack =>
+  stack.replace(/ at /g, '<br/> at ');
 
 export const debug  = (...args) => putMessage(LogType.debug, ...args);
 export const info   = (...args) => putMessage(LogType.info, ...args);
 export const warn   = (...args) => putMessage(LogType.warn, ...args);
-export const error  = (...args) => putMessage(LogType.error, ...args);
+export const error  = (...args) => {
+  const x = args.map(a => a.stack && prettyStackTrace(a.stack) || a);
+  putMessage(LogType.error, ...x);
+}
 
 debug("test debug", 1, 2);
 info("test info", 1, 2);

@@ -9,6 +9,7 @@ function main_init() {
   log.debug('main init');
   const game = game_init(dom, mouse);
 
+  let clock;
   let scene;
   let camera;
   let renderer;
@@ -19,7 +20,7 @@ function main_init() {
       try
       {
         scene_setup();
-        game.start(scene, camera, textures);
+        game.start(clock, scene, camera, textures);
         render();
       } catch (e) {
         log.error("ERROR:", "startup", e);
@@ -33,6 +34,7 @@ function main_init() {
   function scene_setup() {
     //This is all code needed to set up a basic ThreeJS scene
     //First we initialize the scene and our camera
+    clock = new three.Clock();
     scene = new three.Scene();
     camera = new three.PerspectiveCamera(
       75
@@ -51,9 +53,9 @@ function main_init() {
   }
 
   function render() {
-    game.render(scene, camera);
-    requestAnimationFrame( render );
-    renderer.render( scene, camera );
+    game.render(clock, scene, camera);
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
   }
   log.debug('main init done');
 }

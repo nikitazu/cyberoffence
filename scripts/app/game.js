@@ -6,6 +6,7 @@ import * as keyboard from 'app/keyboard.js';
 import ArenaController from 'app/arena/controller.js';
 import DamageController from 'app/damage/controller.js';
 import FighterController from 'app/fighter/controller.js';
+import CounterController from 'app/temp/counter/controller.js';
 import CameraController from 'app/ui/camera/controller.js';
 import HudController from 'app/ui/hud/controller.js';
 
@@ -16,6 +17,7 @@ export default function (
   const arenaController   = new ArenaController();
   const damageController  = new DamageController();
   const fighterController = new FighterController();
+  const counterController = new CounterController();
   const cameraController  = new CameraController();
   const hudController     = new HudController();
 
@@ -32,8 +34,10 @@ export default function (
   let fighterB;
   
   let uniforms;
+  
+  let counter;
 
-  function start(scene, camera, textures) {
+  function start(clock, scene, camera, textures) {
     log.debug("game start");
     uniforms = {
       resolution : {
@@ -70,6 +74,7 @@ export default function (
     damageB = damageController.create();
     fighterA = fighterController.create(scene, textures, true);
     fighterB = fighterController.create(scene, textures, false);
+    counter = counterController.create(scene, textures);
 
     scene.add(cube);
     scene.add(sprite);
@@ -158,7 +163,9 @@ export default function (
     });
 	}
 
-	function render(scene, camera) {
+	function render(clock, scene, camera) {
+    const timePassedMs = clock.getDelta() * 1000;
+
     // update
     try
     {
@@ -169,6 +176,7 @@ export default function (
       damageController.update(damageB.model);
       fighterController.update(fighterA.model, damageB.model);
       fighterController.update(fighterB.model, damageA.model);
+      counterController.update(counter.model);
       cameraController.update(
         cam.model
       , fighterA.model.position
@@ -200,6 +208,7 @@ export default function (
       damageController.render(damageB);
       fighterController.render(fighterA);
       fighterController.render(fighterB);
+      counterController.render(counter, timePassedMs);
     } catch (e) {
       log.error(`game.render (render) error: ${e}`);
       throw e;
@@ -248,6 +257,7 @@ export default function (
   , textures  : [
       "images/dummy_stand_01.png"
     , "images/bg_park_01.jpg"
+    , "images/counter_ss.png"
     ]
 	};
 }

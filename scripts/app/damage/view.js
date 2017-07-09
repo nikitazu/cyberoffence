@@ -22,7 +22,7 @@ export class DamageItemView {
 
   render () {
     const deltaY = -1;
-    const deltaZ = -10;
+    const deltaZ = -9;
     
     this.sprite.position.x = this.model.position.x;
     this.sprite.position.y = this.model.position.y + deltaY;

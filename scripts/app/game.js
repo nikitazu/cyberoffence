@@ -261,7 +261,7 @@ export default function (
 	  start     : start
   , render    : render
   , textures  : [
-      "images/dummy_stand_01.png"
+      "images/dummy2_stand_ss.png"
     , "images/bg_park_01.jpg"
     , "images/counter_ss.png"
     ]

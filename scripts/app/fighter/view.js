@@ -1,11 +1,13 @@
 import * as three from 'three';
+import TextureAnimator from 'app/utils/three/texture_animator.js';
 
 export default class {
   constructor (model, gameContext) {
     this.model = model;
+    this.gameContext = gameContext;
 
     const material = new three.MeshBasicMaterial({
-      map: gameContext.textures["images/dummy_stand_01.png"]
+      map: gameContext.textures["images/dummy2_stand_ss.png"]
     , color: 0xffffff
     });
 
@@ -15,6 +17,16 @@ export default class {
       new three.PlaneGeometry(this.model.size.w, this.model.size.h)
     , material
     );
+
+    this.animator = new TextureAnimator(
+      gameContext.textures["images/dummy2_stand_ss.png"]
+    , { frameCountX: 4
+      , frameCountY: 4
+      , startIndex: this.model.animation.start
+      , frameCount: this.model.animation.count
+      , frameDurationMs: this.model.animation.durationMs
+      }
+    );
   }
 
   render () {
@@ -23,5 +35,6 @@ export default class {
     this.sprite.position.x = this.model.position.x;
     this.sprite.position.y = this.model.position.y + deltaY;
     this.sprite.position.z = this.model.position.z + deltaZ;
+    this.animator.update(this.gameContext.timePassedMs);
   }
 }

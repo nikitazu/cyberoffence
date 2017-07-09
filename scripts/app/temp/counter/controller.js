@@ -19,6 +19,6 @@ export default class {
   }
 
   render (view) {
-    view.render(this.gameContext);
+    view.render();
   }
 }

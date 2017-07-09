@@ -25,8 +25,9 @@ export default class {
     this.texture.wrapS = three.RepeatWrapping;
     this.texture.wrapT = three.RepeatWrapping;
     this.texture.repeat.set(this.deltaOffsetX, this.deltaOffsetY);
-    this.texture.offset.x = this._offsetX;
-    this.texture.offset.y = this._offsetY;
+
+    this.offsetCache = this._createOffsetCache();
+    this._updateOffset(this.currentFrameIndex);
   }
 
   update (timePassedMs) {
@@ -38,16 +39,32 @@ export default class {
         this.currentFrameIndex = this.startIndex;
       }
     }
-    this.texture.offset.x = this._offsetX;
-    this.texture.offset.y = this._offsetY;
+    this._updateOffset(this.currentFrameIndex);
   }
-  
-  get _offsetX() {
-    return this.deltaOffsetX * (this.currentFrameIndex % this.frameCountX);
+
+  _updateOffset(i) {
+    const offset = this.offsetCache[this.currentFrameIndex];
+    this.texture.offset.x = offset.x;
+    this.texture.offset.y = offset.y;
   }
-  
-  get _offsetY() {
+
+  _createOffsetCache() {
+    const cache = [];
+    for (let i = this.startIndex; i < this.frameCount; i++) {
+      cache[i] = {
+        x: this._offsetX(i)
+      , y: this._offsetY(i)
+      };
+    }
+    return cache;
+  }
+
+  _offsetX(i) {
+    return this.deltaOffsetX * (i % this.frameCountX);
+  }
+
+  _offsetY(i) {
     return this.deltaOffsetY
-    * (this.frameCountY - 1 - Math.floor(this.currentFrameIndex / this.frameCountX));
+    * (this.frameCountY - 1 - Math.floor(i / this.frameCountX));
   }
 }

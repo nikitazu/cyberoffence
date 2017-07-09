@@ -1,5 +1,6 @@
 import * as three from 'three';
 import TextureAnimator from 'app/utils/three/texture_animator.js';
+import TextureOffsetMap from 'app/utils/texture_offset_map.js';
 
 export default class {
   constructor (model, gameContext) {
@@ -18,12 +19,14 @@ export default class {
 
     this.animator = new TextureAnimator(
       gameContext.textures["images/counter_ss.png"]
-    , { frameCountX: 4
-      , frameCountY: 4
-      , startIndex: this.model.animation.start
-      , frameCount: this.model.animation.count
-      , frameDurationMs: this.model.animation.durationMs
-      }
+    , new TextureOffsetMap(
+        { frameCountX: 4
+        , frameCountY: 4
+        , startIndex: this.model.animation.start
+        , frameCount: this.model.animation.count
+        , frameDurationMs: this.model.animation.durationMs
+        }
+      )
     );
   }
 
